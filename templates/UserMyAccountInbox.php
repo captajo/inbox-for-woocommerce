@@ -9,12 +9,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-if ( ! class_exists( 'WC_Inbox_UserMyAccountInbox' ) ) {
-	class WC_Inbox_UserMyAccountInbox {
+if ( ! class_exists( 'IBXFWL_Inbox_UserMyAccountInbox' ) ) {
+	class IBXFWL_Inbox_UserMyAccountInbox {
 		public static function showTickets() {
-			require_once WOOCOMMERCE_SWEITO_INCLUDES_URL . '/SettingController.php';
-			$setStyle = WC_Inbox_SettingController::defaultTicketThreadStyle();
-			$messageTypes = WC_Inbox_SettingController::defaultCustomerInboxMessageTypes();
+			require_once IBXFWL_SWEITO_INCLUDES_URL . '/SettingController.php';
+			$setStyle = IBXFWL_Inbox_SettingController::defaultTicketThreadStyle();
+			$messageTypes = IBXFWL_Inbox_SettingController::defaultCustomerInboxMessageTypes();
 
 			echo '<h5>' . esc_html__('Messages (Inbox)', 'inbox-for-woocommerce') . '</h5>';
 			echo '<p><small>' . esc_html__('Send messages to the store owner here or ask the seller about a product.', 'inbox-for-woocommerce') . '</small></p>';
@@ -79,7 +79,7 @@ if ( ! class_exists( 'WC_Inbox_UserMyAccountInbox' ) ) {
                 <div id="uploadedDocumentPreview" class="wcs-ticket-upload-documents" style="display: none;">
                     <div class="wcs-row">
                         <div class="wcs-col-10">
-                            <img src="' . esc_html__(WOOCOMMERCE_HELPDESK_ASSETS_URL) . '/images/paperclip-solid.svg" style="width: 14px; margin-left: 10px" /> <span id="uploadedDocumentCount">1</span> ' . esc_html__('attachment(s) added', 'inbox-for-woocommerce') . '
+                            <img src="' . esc_html__(IBXFWL_HELPDESK_ASSETS_URL) . '/images/paperclip-solid.svg" style="width: 14px; margin-left: 10px" /> <span id="uploadedDocumentCount">1</span> ' . esc_html__('attachment(s) added', 'inbox-for-woocommerce') . '
                         </div>
                         <div class="wcs-col-2 wcs-text-right">
                             <a onClick="dropUploadAttachment()">' . esc_html__('Drop', 'inbox-for-woocommerce') . '</a>
@@ -88,7 +88,7 @@ if ( ! class_exists( 'WC_Inbox_UserMyAccountInbox' ) ) {
                 </div>
                 <div class="woocommerce" style="margin-top: 10px;">
                     <button class="button" onClick="sendNewInboxMessage()" id="wooCommerceSweitoInboxButton">' . esc_html__('Send', 'inbox-for-woocommerce') . '</button> 
-                    <div class="wcs-margin-top-10"><a onClick="addMessageAttachment()"> <img src="' . esc_html__(WOOCOMMERCE_HELPDESK_ASSETS_URL) . '/images/paperclip-solid.svg" style="width: 14px; margin-left: 10px" /> ' . esc_html__('Attach File', 'inbox-for-woocommerce') . '</a></div> <br/>
+                    <div class="wcs-margin-top-10"><a onClick="addMessageAttachment()"> <img src="' . esc_html__(IBXFWL_HELPDESK_ASSETS_URL) . '/images/paperclip-solid.svg" style="width: 14px; margin-left: 10px" /> ' . esc_html__('Attach File', 'inbox-for-woocommerce') . '</a></div> <br/>
                     <input type="file" onChange="handleFileUpload()" accept=".doc,.docx,.pdf,.jpg,.png,.jpeg" style="display: none" id="uploadFileField" />
                     <div id="messageAttachmentContents"></div>
                     <div id="wooCommerceSweitoSendError"></div>
@@ -121,7 +121,7 @@ if ( ! class_exists( 'WC_Inbox_UserMyAccountInbox' ) ) {
                 <div id="uploadedDocumentPreview2" class="wcs-ticket-upload-documents" style="display: none; margin-bottom: 0px;">
                     <div class="wcs-row">
                         <div class="wcs-col-10">
-                            <img src="' . esc_html(WOOCOMMERCE_HELPDESK_ASSETS_URL) . '/images/paperclip-solid.svg" style="width: 14px; margin-left: 10px" /> <span id="uploadedDocumentCount2">1</span> ' . esc_html__('attachment(s) added', 'inbox-for-woocommerce') . '
+                            <img src="' . esc_html(IBXFWL_HELPDESK_ASSETS_URL) . '/images/paperclip-solid.svg" style="width: 14px; margin-left: 10px" /> <span id="uploadedDocumentCount2">1</span> ' . esc_html__('attachment(s) added', 'inbox-for-woocommerce') . '
                         </div>
                         <div class="wcs-col-2 wcs-text-right">
                             <a onClick="dropUploadAttachment2()">' . esc_html__('Drop', 'inbox-for-woocommerce') . '</a>
@@ -139,7 +139,7 @@ if ( ! class_exists( 'WC_Inbox_UserMyAccountInbox' ) ) {
                             </div>
                             <div class="wcs-col-2 wcs-text-left">
                                 <button onClick="sendUserReplyToThread()" class="button wcs-button-block" id="wooCommerceSweitoInboxReplyButton">' . esc_html__('Send', 'inbox-for-woocommerce') . '</button>
-                                <div class="wcs-margin-top-10 wcs-text-center"><a onClick="addMessageAttachment2()"> <img src="' . esc_html(WOOCOMMERCE_HELPDESK_ASSETS_URL) . '/images/paperclip-solid.svg" style="width: 14px; margin-left: 10px" /> ' . esc_html__('Attach File', 'inbox-for-woocommerce') . '</a></div> <br/>
+                                <div class="wcs-margin-top-10 wcs-text-center"><a onClick="addMessageAttachment2()"> <img src="' . esc_html(IBXFWL_HELPDESK_ASSETS_URL) . '/images/paperclip-solid.svg" style="width: 14px; margin-left: 10px" /> ' . esc_html__('Attach File', 'inbox-for-woocommerce') . '</a></div> <br/>
                                 <input type="file" onChange="handleFileUpload2()" accept=".pdf,.jpg,.png,.jpeg" style="display: none" id="uploadFileField2" />
                                 <div id="messageAttachmentContents2"></div>
                             </div>

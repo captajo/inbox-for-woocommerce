@@ -9,8 +9,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-if ( ! class_exists( 'WC_Inbox_Sweito_ContinueAccountParams' ) ) {
-	class WC_Inbox_Sweito_ContinueAccountParams {
+if ( ! class_exists( 'IBXFWL_Inbox_Sweito_ContinueAccountParams' ) ) {
+	class IBXFWL_Inbox_Sweito_ContinueAccountParams {
 
 		/** Variable: string */
 		public $emailAddress;
@@ -19,7 +19,7 @@ if ( ! class_exists( 'WC_Inbox_Sweito_ContinueAccountParams' ) ) {
 		 * Set Site
 		 *
 		 * @param string $emailAddress
-		 * @return WC_Inbox_Sweito_ContinueAccountParams
+		 * @return IBXFWL_Inbox_Sweito_ContinueAccountParams
 		 */
 		public function setEmailAddress( $emailAddress) {
 			$this->emailAddress = $emailAddress;

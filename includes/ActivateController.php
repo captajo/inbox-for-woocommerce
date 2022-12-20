@@ -9,8 +9,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-if ( ! class_exists( 'WC_Inbox_ActivateController' ) ) {
-	class WC_Inbox_ActivateController {
+if ( ! class_exists( 'IBXFWL_Inbox_ActivateController' ) ) {
+	class IBXFWL_Inbox_ActivateController {
 
 		public static function activate() {
 			// install database
@@ -28,8 +28,8 @@ if ( ! class_exists( 'WC_Inbox_ActivateController' ) ) {
 		public static function databaseInstallation() { 
 			self::importDirectories();
 
-			$existingDbVersion = get_option(WC_Inbox_DatabaseController::OPTION_VERSION);
-			$currentDbVersion = WC_Inbox_DatabaseController::CURRENT_VERSION;
+			$existingDbVersion = get_option(IBXFWL_Inbox_DatabaseController::OPTION_VERSION);
+			$currentDbVersion = IBXFWL_Inbox_DatabaseController::CURRENT_VERSION;
 			
 			global $wpdb;
 			$charset_collate = $wpdb->get_charset_collate();
@@ -43,7 +43,7 @@ if ( ! class_exists( 'WC_Inbox_ActivateController' ) ) {
 				self::installWooCommerceTicketThreadsTable($wpdb, $charset_collate);
 				self::installWooCommerceTicketAttachmentsTable($wpdb, $charset_collate);
 
-				add_option(WC_Inbox_DatabaseController::OPTION_VERSION, $currentDbVersion);
+				add_option(IBXFWL_Inbox_DatabaseController::OPTION_VERSION, $currentDbVersion);
 			} 
 		}
 
@@ -66,7 +66,7 @@ if ( ! class_exists( 'WC_Inbox_ActivateController' ) ) {
 		 */
 		public static function installWooCommerceUsersTable( $wpdb, $charset_collate) { 
 
-			$table_name = $wpdb->prefix . WC_Inbox_DatabaseController::DB_USERS_TABLE;
+			$table_name = $wpdb->prefix . IBXFWL_Inbox_DatabaseController::DB_USERS_TABLE;
 			if ( $wpdb->get_var($wpdb->prepare('SHOW TABLES LIKE %s', $table_name)) != $table_name ) {
 
 				$sql = "CREATE TABLE $table_name (
@@ -94,7 +94,7 @@ if ( ! class_exists( 'WC_Inbox_ActivateController' ) ) {
 		 */
 		public static function installWooCommerceTicketsTable( $wpdb, $charset_collate) { 
 			
-			$table_name = $wpdb->prefix . WC_Inbox_DatabaseController::DB_TICKETS_TABLE;
+			$table_name = $wpdb->prefix . IBXFWL_Inbox_DatabaseController::DB_TICKETS_TABLE;
 			if ( $wpdb->get_var($wpdb->prepare('SHOW TABLES LIKE %s', $table_name)) != $table_name ) {
 
 				$sql = "CREATE TABLE $table_name (
@@ -125,7 +125,7 @@ if ( ! class_exists( 'WC_Inbox_ActivateController' ) ) {
 		 */
 		public static function installWooCommerceTicketThreadsTable( $wpdb, $charset_collate) { 
 			
-			$table_name = $wpdb->prefix . WC_Inbox_DatabaseController::DB_THREADS_TABLE;
+			$table_name = $wpdb->prefix . IBXFWL_Inbox_DatabaseController::DB_THREADS_TABLE;
 			if ( $wpdb->get_var($wpdb->prepare('SHOW TABLES LIKE %s', $table_name)) != $table_name ) {
 
 				$sql = "CREATE TABLE $table_name (
@@ -154,7 +154,7 @@ if ( ! class_exists( 'WC_Inbox_ActivateController' ) ) {
 		 */
 		public static function installWooCommerceTicketProductsTable( $wpdb, $charset_collate) { 
 			
-			$table_name = $wpdb->prefix . WC_Inbox_DatabaseController::DB_TICKET_PRODUCTS_TABLE;
+			$table_name = $wpdb->prefix . IBXFWL_Inbox_DatabaseController::DB_TICKET_PRODUCTS_TABLE;
 			if ( $wpdb->get_var($wpdb->prepare('SHOW TABLES LIKE %s', $table_name)) != $table_name ) {
 
 				$sql = "CREATE TABLE $table_name (
@@ -179,7 +179,7 @@ if ( ! class_exists( 'WC_Inbox_ActivateController' ) ) {
 		 */
 		public static function installWooCommerceTicketAttachmentsTable( $wpdb, $charset_collate) { 
 			
-			$table_name = $wpdb->prefix . WC_Inbox_DatabaseController::DB_THREAD_ATTACHMENTS_TABLE;
+			$table_name = $wpdb->prefix . IBXFWL_Inbox_DatabaseController::DB_THREAD_ATTACHMENTS_TABLE;
 			if ( $wpdb->get_var($wpdb->prepare('SHOW TABLES LIKE %s', $table_name)) != $table_name ) {
 
 				$sql = "CREATE TABLE $table_name (

@@ -9,8 +9,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-if ( ! class_exists( 'WC_Inbox_DeactivateController' ) ) {
-	class WC_Inbox_DeactivateController {
+if ( ! class_exists( 'IBXFWL_Inbox_DeactivateController' ) ) {
+	class IBXFWL_Inbox_DeactivateController {
 		public static function deactivate() {
 			flush_rewrite_rules();
 		}

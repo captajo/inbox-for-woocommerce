@@ -9,8 +9,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-if ( ! class_exists( 'WC_Inbox_DatabaseController' ) ) {
-	class WC_Inbox_DatabaseController {
+if ( ! class_exists( 'IBXFWL_Inbox_DatabaseController' ) ) {
+	class IBXFWL_Inbox_DatabaseController {
 		const CURRENT_VERSION = '1.0.4';
 		const OPTION_VERSION = 'woocommerce_inbox_db_version';
 		
@@ -227,7 +227,7 @@ $threadIds[] = $result->ID;
 					'description' => $product->get_short_description(),
 					'price' => $product->get_price_html(),
 					'link' => $product->get_permalink(),
-					'img' => wp_get_attachment_image_src( $product->get_image_id(), 'thumbnail' ) ? wp_get_attachment_image_src( $product->get_image_id(), 'thumbnail' ) : [WOOCOMMERCE_HELPDESK_ASSETS_URL . '/images/default-product-img.png']
+					'img' => wp_get_attachment_image_src( $product->get_image_id(), 'thumbnail' ) ? wp_get_attachment_image_src( $product->get_image_id(), 'thumbnail' ) : [IBXFWL_HELPDESK_ASSETS_URL . '/images/default-product-img.png']
 				];
 			}
 
@@ -293,7 +293,7 @@ $threadIds[] = $result->ID;
 					'description' => $product->get_short_description(),
 					'price' => $product->get_price_html(),
 					'link' => $product->get_permalink(),
-					'img' => wp_get_attachment_image_src( $product->get_image_id(), 'thumbnail' ) ? wp_get_attachment_image_src( $product->get_image_id(), 'thumbnail' ) : [WOOCOMMERCE_HELPDESK_ASSETS_URL . '/images/default-product-img.png']
+					'img' => wp_get_attachment_image_src( $product->get_image_id(), 'thumbnail' ) ? wp_get_attachment_image_src( $product->get_image_id(), 'thumbnail' ) : [IBXFWL_HELPDESK_ASSETS_URL . '/images/default-product-img.png']
 				];
 			}
 
@@ -469,7 +469,7 @@ $threadIds[] = $result->ID;
 						'description' => $product->get_short_description(),
 						'price' => $product->get_price_html(),
 						'link' => $product->get_permalink(),
-						'img' => wp_get_attachment_image_src( $product->get_image_id(), 'thumbnail' ) ? wp_get_attachment_image_src( $product->get_image_id(), 'thumbnail' ) : [WOOCOMMERCE_HELPDESK_ASSETS_URL . '/images/default-product-img.png']
+						'img' => wp_get_attachment_image_src( $product->get_image_id(), 'thumbnail' ) ? wp_get_attachment_image_src( $product->get_image_id(), 'thumbnail' ) : [IBXFWL_HELPDESK_ASSETS_URL . '/images/default-product-img.png']
 					];
 				}
 
@@ -529,7 +529,7 @@ $threadIds[] = $result->ID;
 						'description' => $product->get_short_description(),
 						'price' => $product->get_price_html(),
 						'link' => $product->get_permalink(),
-						'img' => wp_get_attachment_image_src( $product->get_image_id(), 'thumbnail' ) ? wp_get_attachment_image_src( $product->get_image_id(), 'thumbnail' ) : [WOOCOMMERCE_HELPDESK_ASSETS_URL . '/images/default-product-img.png']
+						'img' => wp_get_attachment_image_src( $product->get_image_id(), 'thumbnail' ) ? wp_get_attachment_image_src( $product->get_image_id(), 'thumbnail' ) : [IBXFWL_HELPDESK_ASSETS_URL . '/images/default-product-img.png']
 					];
 				}
 
@@ -626,7 +626,7 @@ return ( $results[0] )->reference;
 						'description' => $product->get_short_description(),
 						'price' => $product->get_price_html(),
 						'link' => $product->get_permalink(),
-						'img' => wp_get_attachment_image_src( $product->get_image_id(), 'thumbnail' ) ? wp_get_attachment_image_src( $product->get_image_id(), 'thumbnail' ) : [WOOCOMMERCE_HELPDESK_ASSETS_URL . '/images/default-product-img.png']
+						'img' => wp_get_attachment_image_src( $product->get_image_id(), 'thumbnail' ) ? wp_get_attachment_image_src( $product->get_image_id(), 'thumbnail' ) : [IBXFWL_HELPDESK_ASSETS_URL . '/images/default-product-img.png']
 					];
 				}
 

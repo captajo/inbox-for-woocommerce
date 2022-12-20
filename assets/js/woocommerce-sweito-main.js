@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', function () {
     activateWooCommerceHelpdeskSweitoCard();
 
+    if (!document.getElementById('wooCommerSweitoDisplayStyle')) return;
+
     let setStyle = document.getElementById('wooCommerSweitoDisplayStyle').value;
     if (document.getElementById('wcs-chat-' + setStyle)) {
         scrollToBottomOfChat(setStyle);
@@ -386,43 +388,6 @@ function wcsSaveSetupLocation() {
     });
 }
 
-function wcsSaveActivationKey() {
-    let activationKey = document.getElementById('wcsSetupActivationKey').value;
-
-    document.getElementById('wooCommerceSweitoActivationKeyButton').innerText = 'Please wait ...';
-    document.getElementById('wooCommerceSweitoActivationKeyButton').setAttribute('disabled', 'disabled');
-    document.getElementById('wooCommerceSweitoActivationKeySendReplyError').innerText = '';
-
-    jQuery.ajax({
-        type:"POST",
-        dataType: 'json',
-        url: woocommercesweitoscript_object.ajax_url,
-        data: {
-            action: 'woocommerce_inbox_setup_save_activation_key',
-            activation_key: activationKey,
-            nonce: woocommercesweitoscript_object.wcs_setup_nonce
-        },
-        success:function(res){
-            if (res.success) {
-                document.getElementById('wooCommerceSweitoActivationKeyButton').innerText = 'Continue';
-                document.getElementById('wooCommerceSweitoActivationKeyButton').removeAttribute('disabled');
-
-                wcsSetupSwitchScreen(res.data);
-            } else {
-                document.getElementById('wooCommerceSweitoActivationKeySendReplyError').innerHTML = '<small></small>'+res.data+'</small></small>';
-                document.getElementById('wooCommerceSweitoActivationKeySendReplyError').style.display = '';
-
-                document.getElementById('wooCommerceSweitoActivationKeyButton').innerText = 'Continue';
-                document.getElementById('wooCommerceSweitoActivationKeyButton').removeAttribute('disabled');
-            }
-        },
-        error:function(xhr, status, error) {
-            document.getElementById('wooCommerceSweitoActivationKeyButton').innerText = 'Continue';
-            document.getElementById('wooCommerceSweitoActivationKeyButton').removeAttribute('disabled');
-        }
-    });
-}
-
 function wcsAuthenticateZendesk() {
     document.getElementById('wooCommerceSweitoZendeskAuthButton').innerText = 'Please wait ...';
     document.getElementById('wooCommerceSweitoZendeskAuthButton').setAttribute('disabled', 'disabled');
@@ -637,7 +602,6 @@ function wcsUpdateSetupSite2() {
 
 function wcsSaveSetupPersonalize() {
     let allowCustomerInbox = document.getElementById('wcsAllowMyAccountPage').checked ? 'yes' : 'no';
-    let allowInquiryBox = document.getElementById('wcsAllowInquiryBoxPage').checked ? 'yes' : 'no';
     let allowCTASection = document.getElementById('wcsAllowCTASection').checked ? 'yes' : 'no';
 
     document.getElementById('wooCommerceSweitoPersonalizationButton').innerText = 'Please wait ...';
@@ -651,7 +615,6 @@ function wcsSaveSetupPersonalize() {
         data: {
             action: 'woocommerce_inbox_setup_personalization',
             allow_customer_inbox: allowCustomerInbox,
-            allow_inquiry_box: allowInquiryBox,
             allow_cta_section: allowCTASection,
             nonce: woocommercesweitoscript_object.wcs_setup_nonce
         },

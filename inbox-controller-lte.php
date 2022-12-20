@@ -3,8 +3,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-if ( ! class_exists( 'InboxForWooCommerceLte' ) ) {
-	class InboxForWooCommerceLte {
+if ( ! class_exists( 'IBXFWL_InboxForWooCommerceLte' ) ) {
+	class IBXFWL_InboxForWooCommerceLte {
 		public $plugin;
 	
 		public function __construct() {
@@ -44,32 +44,32 @@ if ( ! class_exists( 'InboxForWooCommerceLte' ) ) {
 			 * AJAX SECTION
 			 */
 			// Inquiry Form
-			add_action( 'wp_ajax_nopriv_woocommerce_sweito_product_ajax', array('WC_Inbox_AjaxController', 'productAjax') );
-			add_action( 'wp_ajax_woocommerce_sweito_product_ajax', array('WC_Inbox_AjaxController', 'productAjax') );
-			add_action( 'wp_ajax_nopriv_woocommerce_sweito_submit_inquiry_form', array('WC_Inbox_AjaxController', 'submitInquiryForm') );
-			add_action( 'wp_ajax_woocommerce_sweito_submit_inquiry_form', array('WC_Inbox_AjaxController', 'submitInquiryForm') );
+			add_action( 'wp_ajax_nopriv_woocommerce_sweito_product_ajax', array('IBXFWL_Inbox_AjaxController', 'productAjax') );
+			add_action( 'wp_ajax_woocommerce_sweito_product_ajax', array('IBXFWL_Inbox_AjaxController', 'productAjax') );
+			add_action( 'wp_ajax_nopriv_woocommerce_sweito_submit_inquiry_form', array('IBXFWL_Inbox_AjaxController', 'submitInquiryForm') );
+			add_action( 'wp_ajax_woocommerce_sweito_submit_inquiry_form', array('IBXFWL_Inbox_AjaxController', 'submitInquiryForm') );
 	
 			// MY ACCOUNT SECTION
-			add_action( 'wp_ajax_nopriv_woocommerce_inbox_product_list_ajax', array('WC_Inbox_AjaxController', 'showProductList') );
-			add_action( 'wp_ajax_woocommerce_inbox_product_list_ajax', array('WC_Inbox_AjaxController', 'showProductList') );
-			add_action( 'wp_ajax_woocommerce_inbox_message_submission_ajax', array('WC_Inbox_AjaxController', 'sendInboxMessageSubmission') );
-			add_action( 'wp_ajax_woocommerce_inbox_message_list_ajax', array('WC_Inbox_AjaxController', 'getUserInboxMessages') );
-			add_action( 'wp_ajax_woocommerce_inbox_message_threads_ajax', array('WC_Inbox_AjaxController', 'showUserMessageThreads') );
-			add_action( 'wp_ajax_woocommerce_inbox_message_reply_thread_ajax', array('WC_Inbox_AjaxController', 'userReplyMessageThread') );
-			add_action( 'wp_ajax_woocommerce_inbox_message_upload_document', array('WC_Inbox_AjaxController', 'uploadDocumentByAjax') );
+			add_action( 'wp_ajax_nopriv_woocommerce_inbox_product_list_ajax', array('IBXFWL_Inbox_AjaxController', 'showProductList') );
+			add_action( 'wp_ajax_woocommerce_inbox_product_list_ajax', array('IBXFWL_Inbox_AjaxController', 'showProductList') );
+			add_action( 'wp_ajax_woocommerce_inbox_message_submission_ajax', array('IBXFWL_Inbox_AjaxController', 'sendInboxMessageSubmission') );
+			add_action( 'wp_ajax_woocommerce_inbox_message_list_ajax', array('IBXFWL_Inbox_AjaxController', 'getUserInboxMessages') );
+			add_action( 'wp_ajax_woocommerce_inbox_message_threads_ajax', array('IBXFWL_Inbox_AjaxController', 'showUserMessageThreads') );
+			add_action( 'wp_ajax_woocommerce_inbox_message_reply_thread_ajax', array('IBXFWL_Inbox_AjaxController', 'userReplyMessageThread') );
+			add_action( 'wp_ajax_woocommerce_inbox_message_upload_document', array('IBXFWL_Inbox_AjaxController', 'uploadDocumentByAjax') );
 	
 			// ADMIN
-			add_action( 'wp_ajax_woocommerce_inbox_setup_create_account', array('WC_Inbox_AjaxController', 'signupSweitoAccount') );
-			add_action( 'wp_ajax_woocommerce_inbox_setup_signin_account', array('WC_Inbox_AjaxController', 'signinSweitoAccount') );
-			add_action( 'wp_ajax_woocommerce_inbox_setup_signin_verify_otp_account', array('WC_Inbox_AjaxController', 'verifySigninSweitoAccount') );
-			add_action( 'wp_ajax_woocommerce_inbox_setup_save_ticket_location', array('WC_Inbox_AjaxController', 'setupSaveLocation') );
-			add_action( 'wp_ajax_woocommerce_inbox_setup_save_activation_key', array('WC_Inbox_AjaxController', 'verifyPurchaseKey') );
-			add_action( 'wp_ajax_woocommerce_inbox_setup_zendesk_auth_token', array('WC_Inbox_AjaxController', 'authZendeskAccount') );
-			add_action( 'wp_ajax_woocommerce_inbox_setup_freshdesk_auth_token', array('WC_Inbox_AjaxController', 'authFreshdeskAccount') );
-			add_action( 'wp_ajax_woocommerce_inbox_setup_verify_helpdesk_auth', array('WC_Inbox_AjaxController', 'verifyHelpdeskAuth') );
-			add_action( 'wp_ajax_woocommerce_inbox_setup_update_site', array('WC_Inbox_AjaxController', 'updateAccountSite') );
-			add_action( 'wp_ajax_woocommerce_inbox_setup_personalization', array('WC_Inbox_AjaxController', 'updateAccountPersonalization') );
-			add_action( 'wp_ajax_woocommerce_inbox_message_admin_reply_thread_ajax', array('WC_Inbox_AjaxController', 'adminUserReplyMessageThread') );
+			add_action( 'wp_ajax_woocommerce_inbox_setup_create_account', array('IBXFWL_Inbox_AjaxController', 'signupSweitoAccount') );
+			add_action( 'wp_ajax_woocommerce_inbox_setup_signin_account', array('IBXFWL_Inbox_AjaxController', 'signinSweitoAccount') );
+			add_action( 'wp_ajax_woocommerce_inbox_setup_signin_verify_otp_account', array('IBXFWL_Inbox_AjaxController', 'verifySigninSweitoAccount') );
+			add_action( 'wp_ajax_woocommerce_inbox_setup_save_ticket_location', array('IBXFWL_Inbox_AjaxController', 'setupSaveLocation') );
+			// add_action( 'wp_ajax_woocommerce_inbox_setup_save_activation_key', array('IBXFWL_Inbox_AjaxController', 'verifyPurchaseKey') );
+			add_action( 'wp_ajax_woocommerce_inbox_setup_zendesk_auth_token', array('IBXFWL_Inbox_AjaxController', 'authZendeskAccount') );
+			add_action( 'wp_ajax_woocommerce_inbox_setup_freshdesk_auth_token', array('IBXFWL_Inbox_AjaxController', 'authFreshdeskAccount') );
+			add_action( 'wp_ajax_woocommerce_inbox_setup_verify_helpdesk_auth', array('IBXFWL_Inbox_AjaxController', 'verifyHelpdeskAuth') );
+			add_action( 'wp_ajax_woocommerce_inbox_setup_update_site', array('IBXFWL_Inbox_AjaxController', 'updateAccountSite') );
+			add_action( 'wp_ajax_woocommerce_inbox_setup_personalization', array('IBXFWL_Inbox_AjaxController', 'updateAccountPersonalization') );
+			add_action( 'wp_ajax_woocommerce_inbox_message_admin_reply_thread_ajax', array('IBXFWL_Inbox_AjaxController', 'adminUserReplyMessageThread') );
 	
 			// WEBHOOK
 			add_action( 'wp_ajax_nopriv_woocommerce_inbox_webhook', array('WC_Inbox_Sweito_InboxService', 'runInboxService') );
@@ -148,12 +148,12 @@ if ( ! class_exists( 'InboxForWooCommerceLte' ) ) {
 	
 		public function admin_inbox_preview() {
 			require_once plugin_dir_path( __FILE__ ) . 'templates/admin/TicketThreadPreview.php';
-			WC_Inbox_Admin_TicketThreadPreview::showTicketThread();
+			IBXFWL_Inbox_Admin_TicketThreadPreview::showTicketThread();
 		}
 	
 		public function admin_inbox_page() {
 			require_once plugin_dir_path( __FILE__ ) . 'inbox-table-controller.php';
-			WC_Inbox_TableController::runTable();
+			IBXFWL_Inbox_TableController::runTable();
 		}
 	
 		public function style_admin_inbox_page() {
@@ -172,10 +172,10 @@ if ( ! class_exists( 'InboxForWooCommerceLte' ) ) {
 		public function admin_index() {
 			if ( ! class_exists( 'WooCommerce' ) ) {
 				require_once plugin_dir_path( __FILE__ ) . 'templates/error/EssentialPluginMissing.php';
-				WC_Inbox_Error_EssentialPluginMissing::showMissingMessage();
+				IBXFWL_Inbox_Error_EssentialPluginMissing::showMissingMessage();
 			} else {
 				require_once plugin_dir_path( __FILE__ ) . 'templates/SetupWizard.php';
-				WC_Inbox_SetupWizard::showHomeSection();
+				IBXFWL_Inbox_SetupWizard::showHomeSection();
 			}
 		}
 	
@@ -186,7 +186,7 @@ if ( ! class_exists( 'InboxForWooCommerceLte' ) ) {
 	
 			wp_localize_script( 'woocommercesweitoscript', 'woocommercesweitoscript_object', array( 
 				'ajax_url' => admin_url( 'admin-ajax.php' ), 
-				'pdf_logo' => WOOCOMMERCE_HELPDESK_ASSETS_URL . '/images/pdf-icon.png',
+				'pdf_logo' => IBXFWL_HELPDESK_ASSETS_URL . '/images/pdf-icon.png',
 				'wcs_setup_otp_failed' => esc_html__('Entered OTP does not match', 'inbox-for-woocommerce'),
 				'wcs_setup_otp_mismatch' => esc_html__('The provided OTP does not match', 'inbox-for-woocommerce'),
 				'wcs_setup_guest_user' => esc_html__('Guest User', 'inbox-for-woocommerce'),
@@ -210,8 +210,8 @@ if ( ! class_exists( 'InboxForWooCommerceLte' ) ) {
 	
 			wp_localize_script( 'woocommercesweitoscript', 'woocommercesweitoscript_object', array( 
 				'ajax_url' => admin_url( 'admin-ajax.php' ),
-				'pdf_logo' => WOOCOMMERCE_HELPDESK_ASSETS_URL . '/images/pdf-icon.png',
-				'recaptcha_key' =>  WC_Inbox_SettingController::defaultGoogleRecaptchaSiteKey(),
+				'pdf_logo' => IBXFWL_HELPDESK_ASSETS_URL . '/images/pdf-icon.png',
+				'recaptcha_key' =>  IBXFWL_Inbox_SettingController::defaultGoogleRecaptchaSiteKey(),
 				'wcs_please_wait' => esc_html__('Please wait ...', 'inbox-for-woocommerce'),
 				'wcs_just_now' => esc_html__('Just Now', 'inbox-for-woocommerce'),
 
@@ -222,7 +222,7 @@ if ( ! class_exists( 'InboxForWooCommerceLte' ) ) {
 	
 		public function activate() {
 			require_once plugin_dir_path( __FILE__ ) . 'includes/ActivateController.php';
-			WC_Inbox_ActivateController::activate();
+			IBXFWL_Inbox_ActivateController::activate();
 		}
 		public function add_cta_box_beneath_product() {
 			if ( ! class_exists( 'WooCommerce' ) ) {
@@ -235,17 +235,17 @@ if ( ! class_exists( 'InboxForWooCommerceLte' ) ) {
 			require_once plugin_dir_path( __FILE__ ) . 'includes/SetupController.php';
 	
 			// if setup is imcomplete
-			if ( !WC_Inbox_SetupController::checkInstallationStatus() ) {
+			if ( !IBXFWL_Inbox_SetupController::checkInstallationStatus() ) {
 return;
 			}
 	
 			// setup personalization
-			$showInquiryCTAButton = WC_Inbox_SettingController::defaultInquiryCTAStatus();
+			$showInquiryCTAButton = IBXFWL_Inbox_SettingController::defaultInquiryCTAStatus();
 			if (!$showInquiryCTAButton) {
 return;
 			}
 	
-			WC_Inbox_ProductAddOn::showCTAButtonBeneathProductPage($product);
+			IBXFWL_Inbox_ProductAddOn::showCTAButtonBeneathProductPage($product);
 		}
 	
 		public function add_account_inbox_tab( $items ) {
@@ -253,12 +253,12 @@ return;
 			require_once plugin_dir_path( __FILE__ ) . 'includes/SetupController.php';
 	
 			// if setup is imcomplete
-			if ( !WC_Inbox_SetupController::checkInstallationStatus() ) {
+			if ( !IBXFWL_Inbox_SetupController::checkInstallationStatus() ) {
 return $items;
 			}
 	
 			// setup personalization
-			$customerInboxStatus = WC_Inbox_SettingController::defaultCustomerInboxStatus();
+			$customerInboxStatus = IBXFWL_Inbox_SettingController::defaultCustomerInboxStatus();
 			if ( !$customerInboxStatus ) {
 return $items;
 			}
@@ -317,15 +317,15 @@ return $items;
 			global $current_section;
 			$settings = array();
 			if ( 'theme' == $current_section ) {
-				$settings = WC_Inbox_SettingFields::showThemeTabFields();
+				$settings = IBXFWL_Inbox_SettingFields::showThemeTabFields();
 			} elseif ( 'security' == $current_section ) {
-				$settings = WC_Inbox_SettingFields::showSecurityTabFields();
+				$settings = IBXFWL_Inbox_SettingFields::showSecurityTabFields();
 			} elseif ( 'third_party' == $current_section ) {
-				$settings = WC_Inbox_SettingFields::showThirdPartyTabFields();
+				$settings = IBXFWL_Inbox_SettingFields::showThirdPartyTabFields();
 			} elseif ( 'notifications' == $current_section ) {
-				$settings = WC_Inbox_SettingFields::showNotificationTabFields();
+				$settings = IBXFWL_Inbox_SettingFields::showNotificationTabFields();
 			} else {
-				$settings = WC_Inbox_SettingFields::showGeneralTabFields();
+				$settings = IBXFWL_Inbox_SettingFields::showGeneralTabFields();
 			}
 			return $settings;
 		}
@@ -408,9 +408,9 @@ return $items;
 				
 				<td class="forminp forminp-<?php echo esc_html(sanitize_title( $value['type'] )); ?>">
 					<div style="background-color: #a7aaad99; padding: 10px; width: fit-content;">
-						<div style="margin-bottom: 10px;"><?php echo esc_html__('Unlock new chat themes', 'inbox-for-woocommerce') ?>, <a target="_blank" href="<?php echo WOOCOMMERCE_SWEITO_PRODUCT_URL; ?>"><?php echo esc_html__('upgrade to full version', 'inbox-for-woocommerce'); ?></a></div>
-						<img style="max-width: 200px; height: 110px" src="<?php echo WOOCOMMERCE_HELPDESK_ASSETS_URL . '/images/chat-style-2.png'; ?>" />             
-						<img style="max-width: 200px; height: 110px" src="<?php echo WOOCOMMERCE_HELPDESK_ASSETS_URL . '/images/chat-style-3.png'; ?>" />  
+						<div style="margin-bottom: 10px;"><?php echo esc_html__('Unlock new chat themes', 'inbox-for-woocommerce') ?>, <a target="_blank" href="<?php echo IBXFWL_SWEITO_PRODUCT_URL; ?>"><?php echo esc_html__('upgrade to full version', 'inbox-for-woocommerce'); ?></a></div>
+						<img style="max-width: 200px; height: 110px" src="<?php echo IBXFWL_HELPDESK_ASSETS_URL . '/images/chat-style-2.png'; ?>" />             
+						<img style="max-width: 200px; height: 110px" src="<?php echo IBXFWL_HELPDESK_ASSETS_URL . '/images/chat-style-3.png'; ?>" />  
 					</div>           
 				</td>
 			</tr>
@@ -437,7 +437,7 @@ return $items;
 	
 		public function add_inbox_setting_sections_settings_tab() {
 			// if plugin is not setup, to setup wizard
-			if ( !WC_Inbox_SetupController::checkInstallationStatus() ) {
+			if ( !IBXFWL_Inbox_SetupController::checkInstallationStatus() ) {
 				wp_redirect( admin_url('admin.php?page=woocommerce-inbox-setup') );
 				exit;
 			}
@@ -457,16 +457,16 @@ return $items;
 			require_once plugin_dir_path( __FILE__ ) . 'includes/SetupController.php';
 	
 			// if setup is imcomplete
-			if ( !WC_Inbox_SetupController::checkInstallationStatus() ) {
+			if ( !IBXFWL_Inbox_SetupController::checkInstallationStatus() ) {
 return $items;
 			}
 	
-			$customerInboxStatus = WC_Inbox_SettingController::defaultCustomerInboxStatus();
+			$customerInboxStatus = IBXFWL_Inbox_SettingController::defaultCustomerInboxStatus();
 			if ( !$customerInboxStatus ) {
 return;
 			}
 	
-			WC_Inbox_UserMyAccountInbox::showTickets();
+			IBXFWL_Inbox_UserMyAccountInbox::showTickets();
 		}
 	}
 }

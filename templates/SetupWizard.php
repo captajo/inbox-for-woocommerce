@@ -9,17 +9,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-if ( ! class_exists( 'WC_Inbox_SetupWizard' ) ) {
-	class WC_Inbox_SetupWizard {
+if ( ! class_exists( 'IBXFWL_Inbox_SetupWizard' ) ) {
+	class IBXFWL_Inbox_SetupWizard {
 		public static function showHomeSection() {
-			require_once WOOCOMMERCE_SWEITO_INCLUDES_URL . '/SettingController.php';
+			require_once IBXFWL_SWEITO_INCLUDES_URL . '/SettingController.php';
 			// check if API key and credentials are set
 			$stage = 1;
 
-			$savedToken = get_option(WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_TOKEN);
-			$savedSite = get_option(WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_SITE);
-			$savedEmail = get_option(WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_SITE);
-			$savedLocation = get_option(WC_Inbox_SettingController::SETTING_GENERAL_TICKET_LOCATION);
+			$savedToken = get_option(IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_TOKEN);
+			$savedSite = get_option(IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_SITE);
+			$savedEmail = get_option(IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_SITE);
+			$savedLocation = get_option(IBXFWL_Inbox_SettingController::SETTING_GENERAL_TICKET_LOCATION);
 
 			if ($savedToken && $savedSite && $savedEmail) {
 				$stage = 3;
@@ -27,8 +27,8 @@ if ( ! class_exists( 'WC_Inbox_SetupWizard' ) ) {
 				if ( $savedLocation ) {
 					$stage = 4;
 		
-					$savedReference = get_option(WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_REFERENCE);
-					$savedHelpdeskStatus = get_option(WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_HELPDESK_STATUS);
+					$savedReference = get_option(IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_REFERENCE);
+					$savedHelpdeskStatus = get_option(IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_HELPDESK_STATUS);
 		
 					if ( 'zendesk' == $savedLocation ) {
 						$stage = 32;
@@ -51,9 +51,9 @@ if ( ! class_exists( 'WC_Inbox_SetupWizard' ) ) {
                 <div class="wcs-row">
                     <div class="wcs-col-6">
                         <div style="position: relative; height: 100%;">
-                            <img style="position: absolute; top: 20%; left: 15%; z-index: 2; width: 300px" src="' . esc_html(WOOCOMMERCE_HELPDESK_ASSETS_URL) . '/images/woocommerce-inbox-logo.png"  />
+                            <img style="position: absolute; top: 20%; left: 15%; z-index: 2; width: 300px" src="' . esc_html(IBXFWL_HELPDESK_ASSETS_URL) . '/images/woocommerce-inbox-logo.png"  />
                             <div style="position: absolute; bottom: 5%; left: 25%;">Powered By</div>
-                            <img style="position: absolute; bottom: 2%; left: 45%; z-index: 2; width: 80px" src="' . esc_html(WOOCOMMERCE_HELPDESK_ASSETS_URL) . '/images/sweito-logo.png"  />
+                            <img style="position: absolute; bottom: 2%; left: 45%; z-index: 2; width: 80px" src="' . esc_html(IBXFWL_HELPDESK_ASSETS_URL) . '/images/sweito-logo.png"  />
                         </div>
                     </div>
                     <div class="wcs-col-6">
@@ -201,7 +201,7 @@ if ( ! class_exists( 'WC_Inbox_SetupWizard' ) ) {
                             <div class="wcs-col-12 wcs-text-center">
                                 <div data-location="wpadmin" class="wcs-helpdesk-cards wcs-helpdesk-active wsc-card-cursor-point" style="margin-left: 50px">
                                     <p class="wsc-helpdesk-text"><small>' . esc_html__('WordPress Admin', 'inbox-for-woocommerce') . '</small></p>
-                                    <img class="wcs-helpdesk-wordpress-img" src="' . esc_html(WOOCOMMERCE_HELPDESK_ASSETS_URL) . '/images/wordpress-logo.png" />
+                                    <img class="wcs-helpdesk-wordpress-img" src="' . esc_html(IBXFWL_HELPDESK_ASSETS_URL) . '/images/wordpress-logo.png" />
                                 </div>
                             </div>
                         </div>
@@ -218,13 +218,13 @@ if ( ! class_exists( 'WC_Inbox_SetupWizard' ) ) {
                             <div class="wcs-col-6">
                                 <div data-location="zendesk" class="wcs-helpdesk-cards wsc-card-cursor-point">
                                     <p class="wsc-helpdesk-text"><small>' . esc_html__('Zendesk', 'inbox-for-woocommerce') . '</small></p>
-                                    <img class="wcs-helpdesk-img" src="' . esc_html(WOOCOMMERCE_HELPDESK_ASSETS_URL) . '/images/zendesk-logo.png" />
+                                    <img class="wcs-helpdesk-img" src="' . esc_html(IBXFWL_HELPDESK_ASSETS_URL) . '/images/zendesk-logo.png" />
                                 </div>
                             </div>
                             <div class="wcs-col-6">
                                 <div data-location="freshdesk" class="wcs-helpdesk-cards wsc-card-cursor-point">
                                     <p class="wsc-helpdesk-text"><small>' . esc_html__('Freshdesk', 'inbox-for-woocommerce') . '</small></p>
-                                    <img class="wcs-helpdesk-freshdesk-img" src="' . esc_html(WOOCOMMERCE_HELPDESK_ASSETS_URL) . '/images/freshdesk-logo.png" /> 
+                                    <img class="wcs-helpdesk-freshdesk-img" src="' . esc_html(IBXFWL_HELPDESK_ASSETS_URL) . '/images/freshdesk-logo.png" /> 
                                 </div>
                             </div>
                         </div>
@@ -278,7 +278,7 @@ if ( ! class_exists( 'WC_Inbox_SetupWizard' ) ) {
                             <div class="wcs-col-12 wcs-text-center">
                                 <div data-location="wpadmin" class="wcs-helpdesk-cards wcs-helpdesk-active wsc-card-cursor-point" style="margin-left: 50px">
                                     <p class="wsc-helpdesk-text"><small>' . esc_html__('Zendesk', 'inbox-for-woocommerce') . '</small></p>
-                                    <img class="wcs-helpdesk-wordpress-img" src="' . esc_html(WOOCOMMERCE_HELPDESK_ASSETS_URL) . '/images/zendesk-logo.png" />
+                                    <img class="wcs-helpdesk-wordpress-img" src="' . esc_html(IBXFWL_HELPDESK_ASSETS_URL) . '/images/zendesk-logo.png" />
                                 </div>
                             </div>
                         </div>
@@ -357,7 +357,7 @@ if ( ! class_exists( 'WC_Inbox_SetupWizard' ) ) {
                             <div class="wcs-col-12 wcs-text-center">
                                 <div data-location="wpadmin" class="wcs-helpdesk-cards wcs-helpdesk-active wsc-card-cursor-point" style="margin-left: 50px">
                                     <p class="wsc-helpdesk-text"><small>' . esc_html__('Freshdesk', 'inbox-for-woocommerce') . '</small></p>
-                                    <img class="wcs-helpdesk-wordpress-img" src="' . esc_html(WOOCOMMERCE_HELPDESK_ASSETS_URL) . '/images/freshdesk-logo.png" />
+                                    <img class="wcs-helpdesk-wordpress-img" src="' . esc_html(IBXFWL_HELPDESK_ASSETS_URL) . '/images/freshdesk-logo.png" />
                                 </div>
                             </div>
                         </div>
@@ -416,7 +416,7 @@ if ( ! class_exists( 'WC_Inbox_SetupWizard' ) ) {
                                     <label>
                                         <input id="wcsAllowMyAccountPage" type="checkbox" checked class="checkbox" />
                                         <strong>' . esc_html__('Allow customer "Inbox" section in MyAccount page for registered users', 'inbox-for-woocommerce') . '</strong>
-                                        <img style="width: 100%; margin-top: 10px;" src="' . esc_html(WOOCOMMERCE_HELPDESK_ASSETS_URL) . '/images/demo-inbox-preview.png" />
+                                        <img style="width: 100%; margin-top: 10px;" src="' . esc_html(IBXFWL_HELPDESK_ASSETS_URL) . '/images/demo-inbox-preview.png" />
                                     </label>
                                 </div>
                             </div>
@@ -429,7 +429,7 @@ if ( ! class_exists( 'WC_Inbox_SetupWizard' ) ) {
                                     <label>
                                         <input type="checkbox" disabled="disabled" class="checkbox" />
                                         <strong>' . esc_html__('Allow inquire box on product display screen', 'inbox-for-woocommerce') . '</strong>
-                                        <img style="width: 100%;" src="' . esc_html(WOOCOMMERCE_HELPDESK_ASSETS_URL) . '/images/demo-inquiry-button.png" />
+                                        <img style="width: 100%;" src="' . esc_html(IBXFWL_HELPDESK_ASSETS_URL) . '/images/demo-inquiry-button.png" />
                                     </label>
                                 </div>
                             </div>
@@ -442,7 +442,7 @@ if ( ! class_exists( 'WC_Inbox_SetupWizard' ) ) {
                                     <label>
                                         <input id="wcsAllowCTASection" type="checkbox" checked class="checkbox" />
                                         <strong>' . esc_html__('Allow CTA Banner on product display screen', 'inbox-for-woocommerce') . '</strong>
-                                        <img style="width: 100%; margin-top: 10px;" src="' . esc_html(WOOCOMMERCE_HELPDESK_ASSETS_URL) . '/images/demo-cta-banner.png" />
+                                        <img style="width: 100%; margin-top: 10px;" src="' . esc_html(IBXFWL_HELPDESK_ASSETS_URL) . '/images/demo-cta-banner.png" />
                                     </label>
                                 </div>
                             </div>

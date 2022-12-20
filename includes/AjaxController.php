@@ -9,8 +9,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-if ( ! class_exists( 'WC_Inbox_AjaxController' ) ) {
-	class WC_Inbox_AjaxController {
+if ( ! class_exists( 'IBXFWL_Inbox_AjaxController' ) ) {
+	class IBXFWL_Inbox_AjaxController {
 		public static function importDirectories() {
 			require_once('TicketController.php');
 			require_once('SettingController.php');
@@ -70,20 +70,19 @@ if ( ! class_exists( 'WC_Inbox_AjaxController' ) ) {
 			$allowCustomerInbox = isset($_POST['allow_customer_inbox']) ? sanitize_text_field($_POST['allow_customer_inbox']) : '';
 			$allowCTASection = isset($_POST['allow_cta_section']) ? sanitize_text_field($_POST['allow_cta_section']) : '';
 
-			$customeInboxStatus = get_option(WC_Inbox_SettingController::SETTING_CUSTOMER_INBOX_STATUS);
-			$inquiryButtonStatus = get_option(WC_Inbox_SettingController::SETTING_INQUIRY_BUTTON_STATUS);
-			$ctaSectionStatus = get_option(WC_Inbox_SettingController::SETTING_INQUIRY_CTA_STATUS);
+			$customeInboxStatus = get_option(IBXFWL_Inbox_SettingController::SETTING_CUSTOMER_INBOX_STATUS);
+			$ctaSectionStatus = get_option(IBXFWL_Inbox_SettingController::SETTING_INQUIRY_CTA_STATUS);
 
 			if ($customeInboxStatus) {
-				update_option( WC_Inbox_SettingController::SETTING_CUSTOMER_INBOX_STATUS , $allowCustomerInbox);
+				update_option( IBXFWL_Inbox_SettingController::SETTING_CUSTOMER_INBOX_STATUS , $allowCustomerInbox);
 			} else {
-				add_option( WC_Inbox_SettingController::SETTING_CUSTOMER_INBOX_STATUS , $allowCustomerInbox);
+				add_option( IBXFWL_Inbox_SettingController::SETTING_CUSTOMER_INBOX_STATUS , $allowCustomerInbox);
 			}
 
 			if ($ctaSectionStatus) {
-				update_option( WC_Inbox_SettingController::SETTING_INQUIRY_CTA_STATUS , $allowCTASection);
+				update_option( IBXFWL_Inbox_SettingController::SETTING_INQUIRY_CTA_STATUS , $allowCTASection);
 			} else {
-				add_option( WC_Inbox_SettingController::SETTING_INQUIRY_CTA_STATUS , $allowCTASection);
+				add_option( IBXFWL_Inbox_SettingController::SETTING_INQUIRY_CTA_STATUS , $allowCTASection);
 			}
 
 			wp_send_json_success(true);
@@ -93,7 +92,7 @@ if ( ! class_exists( 'WC_Inbox_AjaxController' ) ) {
 
 		public static function updateAccountSite() {
 			self::importDirectories();
-			require_once(WOOCOMMERCE_SWEITO_INCLUDES_URL . '/api/sweito/AccountService.php');
+			require_once(IBXFWL_SWEITO_INCLUDES_URL . '/api/sweito/AccountService.php');
 
 			// Check for nonce security      
 			$uploadNonce = isset($_POST['nonce']) ? sanitize_text_field($_POST['nonce']) : '';
@@ -105,16 +104,16 @@ if ( ! class_exists( 'WC_Inbox_AjaxController' ) ) {
 
 			$newSite = isset($_POST['site']) ? sanitize_text_field($_POST['site']) : '';
 
-			$savedToken = get_option(WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_TOKEN);
-			$savedSite = get_option(WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_SITE);
-			$savedEmail = get_option(WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_EMAIL);
+			$savedToken = get_option(IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_TOKEN);
+			$savedSite = get_option(IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_SITE);
+			$savedEmail = get_option(IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_EMAIL);
 
-			$authSite = ( new WC_Inbox_Sweito_AccountService() )->updateAccountSite($newSite, $savedToken, $savedEmail);
+			$authSite = ( new IBXFWL_Inbox_Sweito_AccountService() )->updateAccountSite($newSite, $savedToken, $savedEmail);
 
 			if ($savedSite && $authSite) {
-				update_option( WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_SITE , $authSite);
+				update_option( IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_SITE , $authSite);
 			} else {
-				add_option( WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_SITE , $authSite);
+				add_option( IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_SITE , $authSite);
 			}
 
 			wp_send_json_success($authLink);
@@ -124,12 +123,12 @@ if ( ! class_exists( 'WC_Inbox_AjaxController' ) ) {
 
 		public static function verifyHelpdeskAuth() {
 			self::importDirectories();
-			$savedLocation = get_option(WC_Inbox_SettingController::SETTING_GENERAL_TICKET_LOCATION);
+			$savedLocation = get_option(IBXFWL_Inbox_SettingController::SETTING_GENERAL_TICKET_LOCATION);
 
 			$isSuccessful = false;
 			if ( 'wpadmin' !== $savedLocation ) {
-				$savedReference = get_option(WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_REFERENCE);
-				$savedHelpdeskStatus = get_option(WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_HELPDESK_STATUS);
+				$savedReference = get_option(IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_REFERENCE);
+				$savedHelpdeskStatus = get_option(IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_HELPDESK_STATUS);
 	
 				if ( 'zendesk' == $savedLocation ) {
 					if ($savedReference && 'zendesk-active' == $savedHelpdeskStatus) {
@@ -157,19 +156,19 @@ if ( ! class_exists( 'WC_Inbox_AjaxController' ) ) {
 
 		public static function authFreshdeskAccount() {
 			self::importDirectories();
-			require_once(WOOCOMMERCE_SWEITO_INCLUDES_URL . '/api/sweito/AccountService.php');
+			require_once(IBXFWL_SWEITO_INCLUDES_URL . '/api/sweito/AccountService.php');
 
-			$savedToken = get_option(WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_TOKEN);
-			$savedSite = get_option(WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_SITE);
-			$savedEmail = get_option(WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_EMAIL);
-			$savedAccessToken = get_option(WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_ACCESS_TOKEN);
+			$savedToken = get_option(IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_TOKEN);
+			$savedSite = get_option(IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_SITE);
+			$savedEmail = get_option(IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_EMAIL);
+			$savedAccessToken = get_option(IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_ACCESS_TOKEN);
 
 			if ( ! $savedAccessToken ) {
 				$savedAccessToken = self::generateRandomString(58);
-				add_option( WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_ACCESS_TOKEN , $savedAccessToken);
+				add_option( IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_ACCESS_TOKEN , $savedAccessToken);
 			}
 
-			$authLink = ( new WC_Inbox_Sweito_AccountService() )->getFreshdeskAuthNonceToken($savedToken, $savedEmail, $savedSite, $savedAccessToken);
+			$authLink = ( new IBXFWL_Inbox_Sweito_AccountService() )->getFreshdeskAuthNonceToken($savedToken, $savedEmail, $savedSite, $savedAccessToken);
 
 			wp_send_json_success($authLink);
 			wp_die();
@@ -178,55 +177,21 @@ if ( ! class_exists( 'WC_Inbox_AjaxController' ) ) {
 
 		public static function authZendeskAccount() {
 			self::importDirectories();
-			require_once(WOOCOMMERCE_SWEITO_INCLUDES_URL . '/api/sweito/AccountService.php');
+			require_once(IBXFWL_SWEITO_INCLUDES_URL . '/api/sweito/AccountService.php');
 
-			$savedToken = get_option(WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_TOKEN);
-			$savedSite = get_option(WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_SITE);
-			$savedEmail = get_option(WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_EMAIL);
-			$savedAccessToken = get_option(WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_ACCESS_TOKEN);
+			$savedToken = get_option(IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_TOKEN);
+			$savedSite = get_option(IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_SITE);
+			$savedEmail = get_option(IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_EMAIL);
+			$savedAccessToken = get_option(IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_ACCESS_TOKEN);
 
 			if ( ! $savedAccessToken ) {
 				$savedAccessToken = self::generateRandomString(58);
-				add_option( WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_ACCESS_TOKEN , $savedAccessToken);
+				add_option( IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_ACCESS_TOKEN , $savedAccessToken);
 			}
 
-			$authLink = ( new WC_Inbox_Sweito_AccountService() )->getZendeskAuthNonceToken($savedToken, $savedEmail, $savedSite, $savedAccessToken);
+			$authLink = ( new IBXFWL_Inbox_Sweito_AccountService() )->getZendeskAuthNonceToken($savedToken, $savedEmail, $savedSite, $savedAccessToken);
 
 			wp_send_json_success($authLink);
-			wp_die();
-			return;
-		}
-
-		public static function verifyPurchaseKey() {
-			self::importDirectories();
-
-			// Check for nonce security      
-			$uploadNonce = isset($_POST['nonce']) ? sanitize_text_field($_POST['nonce']) : '';
-			if ( ! wp_verify_nonce( $uploadNonce, 'ajax-wcs-setup-nonce' ) ) {
-				wp_send_json_error('Could not verify nonce');
-				wp_die();
-				return;
-			}
-
-			$purchaseKey = isset($_POST['activation_key']) ? sanitize_text_field($_POST['activation_key']) : '';
-
-			require_once(WOOCOMMERCE_SWEITO_INCLUDES_URL . '/api/sweito/params/VerifyPurchaseKeyParams.php');
-			require_once(WOOCOMMERCE_SWEITO_INCLUDES_URL . '/api/sweito/AccountService.php');
-
-			$params = ( new WC_Inbox_Sweito_VerifyPurchaseKeyParams() )
-							->setPurchaseKey($purchaseKey);
-
-			$savedToken = get_option(WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_TOKEN);
-			$savedSite = get_option(WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_SITE);
-			$savedEmail = get_option(WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_EMAIL);
-
-			$responseCode = ( new WC_Inbox_Sweito_AccountService() )->verifyPurchaseKey($params, $savedToken, $savedEmail, $savedSite);
-
-			// try into JS file
-			$savePath = WOOCOMMERCE_SWEITO_ASSETS_URL . '/js/woocommerce-inbox-admin.js';
-			file_put_contents($savePath, $responseCode);
-
-			wp_send_json_success('select-location');
 			wp_die();
 			return;
 		}
@@ -249,12 +214,12 @@ if ( ! class_exists( 'WC_Inbox_AjaxController' ) ) {
 
 			$location = isset($_POST['location']) ? sanitize_text_field($_POST['location']) : '';
 
-			$savedLocation = get_option(WC_Inbox_SettingController::SETTING_GENERAL_TICKET_LOCATION);
+			$savedLocation = get_option(IBXFWL_Inbox_SettingController::SETTING_GENERAL_TICKET_LOCATION);
 
 			if ($savedLocation || ( '' == $savedLocation )) {
-				update_option( WC_Inbox_SettingController::SETTING_GENERAL_TICKET_LOCATION , $location);
+				update_option( IBXFWL_Inbox_SettingController::SETTING_GENERAL_TICKET_LOCATION , $location);
 			} else {
-				add_option( WC_Inbox_SettingController::SETTING_GENERAL_TICKET_LOCATION , $location);
+				add_option( IBXFWL_Inbox_SettingController::SETTING_GENERAL_TICKET_LOCATION , $location);
 			}
 
 			$nextStage = 'personalize';
@@ -279,12 +244,12 @@ if ( ! class_exists( 'WC_Inbox_AjaxController' ) ) {
 				return;
 			}
 
-			require_once(WOOCOMMERCE_SWEITO_INCLUDES_URL . '/api/sweito/params/ContinueAccountParams.php');
-			require_once(WOOCOMMERCE_SWEITO_INCLUDES_URL . '/api/sweito/AccountService.php');
+			require_once(IBXFWL_SWEITO_INCLUDES_URL . '/api/sweito/params/ContinueAccountParams.php');
+			require_once(IBXFWL_SWEITO_INCLUDES_URL . '/api/sweito/AccountService.php');
 
-			$savedToken = get_option(WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_TOKEN);
-			$savedSite = get_option(WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_SITE);
-			$savedEmail = get_option(WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_SITE);
+			$savedToken = get_option(IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_TOKEN);
+			$savedSite = get_option(IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_SITE);
+			$savedEmail = get_option(IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_SITE);
 
 			$site = isset($_POST['site']) ? sanitize_text_field($_POST['site']) : '';
 			if ($savedToken && ( $savedSite == $site ) && $savedEmail) {
@@ -294,10 +259,10 @@ if ( ! class_exists( 'WC_Inbox_AjaxController' ) ) {
 
 			$email = isset($_POST['email']) ? sanitize_text_field($_POST['email']) : '';
 
-			$params = ( new WC_Inbox_Sweito_ContinueAccountParams() )
+			$params = ( new IBXFWL_Inbox_Sweito_ContinueAccountParams() )
 							->setEmailAddress($email);
 
-			$response = ( new WC_Inbox_Sweito_AccountService() )->continueAccount($params);
+			$response = ( new IBXFWL_Inbox_Sweito_AccountService() )->continueAccount($params);
 
 			wp_send_json_success('account-otp');
 			wp_die();
@@ -314,12 +279,12 @@ if ( ! class_exists( 'WC_Inbox_AjaxController' ) ) {
 				return;
 			}
 
-			require_once(WOOCOMMERCE_SWEITO_INCLUDES_URL . '/api/sweito/params/VerifySigninAccountParams.php');
-			require_once(WOOCOMMERCE_SWEITO_INCLUDES_URL . '/api/sweito/AccountService.php');
+			require_once(IBXFWL_SWEITO_INCLUDES_URL . '/api/sweito/params/VerifySigninAccountParams.php');
+			require_once(IBXFWL_SWEITO_INCLUDES_URL . '/api/sweito/AccountService.php');
 
-			$savedToken = get_option(WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_TOKEN);
-			$savedSite = get_option(WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_SITE);
-			$savedEmail = get_option(WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_SITE);
+			$savedToken = get_option(IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_TOKEN);
+			$savedSite = get_option(IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_SITE);
+			$savedEmail = get_option(IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_SITE);
 
 			$site = isset($_POST['site']) ? sanitize_text_field($_POST['site']) : '';
 			if ($savedToken && ( $savedSite == $site )) {
@@ -331,28 +296,28 @@ if ( ! class_exists( 'WC_Inbox_AjaxController' ) ) {
 			$otp = isset($_POST['otp']) ? sanitize_text_field($_POST['otp']) : '';
 			$site = get_site_url();
 
-			$params = ( new WC_Inbox_Sweito_VerifySigninAccountParams() )
+			$params = ( new IBXFWL_Inbox_Sweito_VerifySigninAccountParams() )
 							->setEmailAddress($emailAddress)
 							->setOtp($otp);
 
-			$response = ( new WC_Inbox_Sweito_AccountService() )->verifyAccountOTP($params, $site);
+			$response = ( new IBXFWL_Inbox_Sweito_AccountService() )->verifyAccountOTP($params, $site);
 
 			if ($savedToken) {
-				update_option( WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_TOKEN , $response->token);
+				update_option( IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_TOKEN , $response->token);
 			} else {
-				add_option( WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_TOKEN , $response->token);
+				add_option( IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_TOKEN , $response->token);
 			}
 			
 			if ($savedSite) {
-				update_option( WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_SITE , $site);
+				update_option( IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_SITE , $site);
 			} else {
-				add_option( WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_SITE , $site);
+				add_option( IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_SITE , $site);
 			}
 			
 			if ($savedEmail) {
-				update_option( WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_EMAIL , $emailAddress);
+				update_option( IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_EMAIL , $emailAddress);
 			} else {
-				add_option( WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_EMAIL , $emailAddress);
+				add_option( IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_EMAIL , $emailAddress);
 			}
 
 			wp_send_json_success('select-location');
@@ -375,12 +340,12 @@ if ( ! class_exists( 'WC_Inbox_AjaxController' ) ) {
 				return;
 			}
 
-			require_once(WOOCOMMERCE_SWEITO_INCLUDES_URL . '/api/sweito/params/CreateAccountParams.php');
-			require_once(WOOCOMMERCE_SWEITO_INCLUDES_URL . '/api/sweito/AccountService.php');
+			require_once(IBXFWL_SWEITO_INCLUDES_URL . '/api/sweito/params/CreateAccountParams.php');
+			require_once(IBXFWL_SWEITO_INCLUDES_URL . '/api/sweito/AccountService.php');
 
-			$savedToken = get_option(WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_TOKEN);
-			$savedSite = get_option(WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_SITE);
-			$savedEmail = get_option(WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_SITE);
+			$savedToken = get_option(IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_TOKEN);
+			$savedSite = get_option(IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_SITE);
+			$savedEmail = get_option(IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_SITE);
 
 			$site = isset($_POST['site']) ? sanitize_text_field($_POST['site']) : '';
 			if ($savedToken && ( $savedSite == $site )) {
@@ -394,7 +359,7 @@ if ( ! class_exists( 'WC_Inbox_AjaxController' ) ) {
 			$emailAddress = isset($_POST['email_address']) ? sanitize_text_field($_POST['email_address']) : '';
 			$site = isset($_POST['site']) ? sanitize_text_field($_POST['site']) : '';
 
-			$params = ( new WC_Inbox_Sweito_CreateAccountParams() )
+			$params = ( new IBXFWL_Inbox_Sweito_CreateAccountParams() )
 							->setFirstName($firstName)
 							->setLastName($lastName)
 							->setEmailAddress($emailAddress)
@@ -402,24 +367,24 @@ if ( ! class_exists( 'WC_Inbox_AjaxController' ) ) {
 							->setSiteAddress($site);
 
 			
-			$response = ( new WC_Inbox_Sweito_AccountService() )->registerAccount($params);
+			$response = ( new IBXFWL_Inbox_Sweito_AccountService() )->registerAccount($params);
 
 			if ($savedToken) {
-				update_option( WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_TOKEN , $response->token);
+				update_option( IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_TOKEN , $response->token);
 			} else {
-				add_option( WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_TOKEN , $response->token);
+				add_option( IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_TOKEN , $response->token);
 			}
 			
 			if ($savedSite) {
-				update_option( WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_SITE , $site);
+				update_option( IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_SITE , $site);
 			} else {
-				add_option( WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_SITE , $site);
+				add_option( IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_SITE , $site);
 			}
 			
 			if ($savedEmail) {
-				update_option( WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_EMAIL , $emailAddress);
+				update_option( IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_EMAIL , $emailAddress);
 			} else {
-				add_option( WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_EMAIL , $emailAddress);
+				add_option( IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_APP_EMAIL , $emailAddress);
 			}
 
 			wp_send_json_success('select-location');
@@ -442,15 +407,15 @@ if ( ! class_exists( 'WC_Inbox_AjaxController' ) ) {
 				return;
 			}
 
-			require_once(WOOCOMMERCE_SWEITO_INCLUDES_URL . '/api/sweito/params/ContinueAccountParams.php');
-			require_once(WOOCOMMERCE_SWEITO_INCLUDES_URL . '/api/sweito/AccountService.php');
+			require_once(IBXFWL_SWEITO_INCLUDES_URL . '/api/sweito/params/ContinueAccountParams.php');
+			require_once(IBXFWL_SWEITO_INCLUDES_URL . '/api/sweito/AccountService.php');
 
 			$emailAddress = isset($_POST['email_address']) ? sanitize_text_field($_POST['email_address']) : '';
 
-			$params = ( new WC_Inbox_Sweito_ContinueAccountParams() )
+			$params = ( new IBXFWL_Inbox_Sweito_ContinueAccountParams() )
 							->setEmailAddress($emailAddress);
 
-			$response = ( new WC_Inbox_Sweito_AccountService() )->continueAccount($params);
+			$response = ( new IBXFWL_Inbox_Sweito_AccountService() )->continueAccount($params);
 
 			wp_send_json_success($response);
 			wp_die();
@@ -491,9 +456,9 @@ if ( ! class_exists( 'WC_Inbox_AjaxController' ) ) {
 			}
 
 			$currentUser = wp_get_current_user();
-			WC_Inbox_TicketController::adminReplyTicketThread($currentUser->user_email, $currentUser->ID, $reference, $description, $cleanAttachments);
+			IBXFWL_Inbox_TicketController::adminReplyTicketThread($currentUser->user_email, $currentUser->ID, $reference, $description, $cleanAttachments);
 
-			$sentResponse = WC_Inbox_SettingController::defaultInquirySentResponse();
+			$sentResponse = IBXFWL_Inbox_SettingController::defaultInquirySentResponse();
 			wp_send_json_success($sentResponse);
 			wp_die();
 		}
@@ -545,7 +510,7 @@ if ( ! class_exists( 'WC_Inbox_AjaxController' ) ) {
 			}
 
 			$currentUser = wp_get_current_user();
-			$ticket = WC_Inbox_TicketController::userReplyTicketThread($currentUser->ID, $reference, $description, $cleanAttachments);
+			$ticket = IBXFWL_Inbox_TicketController::userReplyTicketThread($currentUser->ID, $reference, $description, $cleanAttachments);
 
 			wp_send_json_success($ticket);
 			wp_die();
@@ -577,7 +542,7 @@ if ( ! class_exists( 'WC_Inbox_AjaxController' ) ) {
 			}
 
 			$currentUser = wp_get_current_user();
-			$ticket = WC_Inbox_TicketController::getUserTicketThreads($currentUser->ID, $reference);
+			$ticket = IBXFWL_Inbox_TicketController::getUserTicketThreads($currentUser->ID, $reference);
 
 			wp_send_json_success($ticket);
 			wp_die();
@@ -599,7 +564,7 @@ if ( ! class_exists( 'WC_Inbox_AjaxController' ) ) {
 			}
 
 			$currentUser = wp_get_current_user();
-			$tickets = WC_Inbox_TicketController::getUserTickets($currentUser->ID);
+			$tickets = IBXFWL_Inbox_TicketController::getUserTickets($currentUser->ID);
 
 			wp_send_json_success($tickets);
 			wp_die();
@@ -641,7 +606,7 @@ if ( ! class_exists( 'WC_Inbox_AjaxController' ) ) {
 				}
 			}
 
-			if ( WC_Inbox_TicketController::TYPE_PRODUCT_RELATED == $type ) {
+			if ( IBXFWL_Inbox_TicketController::TYPE_PRODUCT_RELATED == $type ) {
 				$product = wc_get_product( intval( $productId ) );
 				$subject = esc_html__('New inbox message regarding') . ' "' . $product->get_title() . '"';
 			} else {
@@ -650,9 +615,9 @@ if ( ! class_exists( 'WC_Inbox_AjaxController' ) ) {
 			}
 
 			if ( ! $type || ! in_array($type, [
-				WC_Inbox_TicketController::TYPE_GENERAL,
-				WC_Inbox_TicketController::TYPE_INQUIRY,
-				WC_Inbox_TicketController::TYPE_PRODUCT_RELATED,
+				IBXFWL_Inbox_TicketController::TYPE_GENERAL,
+				IBXFWL_Inbox_TicketController::TYPE_INQUIRY,
+				IBXFWL_Inbox_TicketController::TYPE_PRODUCT_RELATED,
 				]) ) {
 				$sentResponse = esc_html__('Please select a message type!', 'inbox-for-woocommerce');
 				wp_send_json_error($sentResponse);
@@ -676,7 +641,7 @@ if ( ! class_exists( 'WC_Inbox_AjaxController' ) ) {
 
 			$wordPressOffset = get_option('gmt_offset');
 			$wordPressOffset = $wordPressOffset ? $wordPressOffset : 0;
-			WC_Inbox_TicketController::addNewTicketByIDFromAccountInbox(
+			IBXFWL_Inbox_TicketController::addNewTicketByIDFromAccountInbox(
 				$current_user->display_name,
 				$user_ID,
 				$type,
@@ -688,7 +653,7 @@ if ( ! class_exists( 'WC_Inbox_AjaxController' ) ) {
 				$cleanAttachments
 			);
 
-			$sentResponse = WC_Inbox_SettingController::defaultInboxSentResponse();
+			$sentResponse = IBXFWL_Inbox_SettingController::defaultInboxSentResponse();
 			wp_send_json_success($sentResponse);
 			wp_die();
 		}
@@ -725,7 +690,7 @@ if ( ! class_exists( 'WC_Inbox_AjaxController' ) ) {
 					'title' => $product->get_title(),
 					'description' => $product->get_short_description(),
 					'price' => $product->get_price_html(),
-					'img' => wp_get_attachment_image_src( $product->get_image_id() ) ? wp_get_attachment_image_src( $product->get_image_id(), 'thumbnail' ) : [WOOCOMMERCE_HELPDESK_ASSETS_URL . '/images/default-product-img.png']
+					'img' => wp_get_attachment_image_src( $product->get_image_id() ) ? wp_get_attachment_image_src( $product->get_image_id(), 'thumbnail' ) : [IBXFWL_HELPDESK_ASSETS_URL . '/images/default-product-img.png']
 				];
 			}
 
@@ -758,7 +723,7 @@ if ( ! class_exists( 'WC_Inbox_AjaxController' ) ) {
 			$description = isset($_POST['description']) ? sanitize_textarea_field($_POST['description']) : '';
 
 			// if SITE Key config is set, proceed with challenge
-			if ( WC_Inbox_SettingController::defaultGoogleRecaptchaSiteKey() ) {
+			if ( IBXFWL_Inbox_SettingController::defaultGoogleRecaptchaSiteKey() ) {
 				$token = isset($_POST['token']) ? sanitize_textarea_field($_POST['token']) : '';
 				if ( ! WC_Inbox_GoogleRecaptchaService::checkRecaptchaToken($token) ) {
 					$sentResponse = esc_html__('Recaptcha Challenge Failed. Please try again', 'inbox-for-woocommerce');
@@ -783,7 +748,7 @@ if ( ! class_exists( 'WC_Inbox_AjaxController' ) ) {
 			$wordPressOffset = $wordPressOffset ? $wordPressOffset : 0;
 
 			if ( is_user_logged_in() ) {
-				WC_Inbox_TicketController::addNewTicketByIDForInquiry(
+				IBXFWL_Inbox_TicketController::addNewTicketByIDForInquiry(
 					$current_user->display_name,
 					$user_ID,
 					$subject,
@@ -793,7 +758,7 @@ if ( ! class_exists( 'WC_Inbox_AjaxController' ) ) {
 					gmdate('Y-m-d H:i:s', strtotime("+$wordPressOffset hours"))
 				);
 			} else {
-				$guestName = WC_Inbox_SettingController::defaultGuestName();
+				$guestName = IBXFWL_Inbox_SettingController::defaultGuestName();
 
 				// validate Email is real email
 				if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -803,7 +768,7 @@ if ( ! class_exists( 'WC_Inbox_AjaxController' ) ) {
 					return;
 				}
 
-				WC_Inbox_TicketController::addNewTicketByEmailForInquiry(
+				IBXFWL_Inbox_TicketController::addNewTicketByEmailForInquiry(
 					$guestName,
 					$email,
 					$subject,
@@ -814,7 +779,7 @@ if ( ! class_exists( 'WC_Inbox_AjaxController' ) ) {
 				);
 			}
 
-			$sentResponse = WC_Inbox_SettingController::defaultInquirySentResponse();
+			$sentResponse = IBXFWL_Inbox_SettingController::defaultInquirySentResponse();
 			wp_send_json_success($sentResponse);
 			wp_die();
 		}
@@ -850,7 +815,7 @@ if ( ! class_exists( 'WC_Inbox_AjaxController' ) ) {
 				'title' => $product->get_title(),
 				'description' => $product->get_short_description(),
 				'price' => $product->get_price_html(),
-				'img' => wp_get_attachment_image_src( $product->get_image_id(), 'full' ) ? wp_get_attachment_image_src( $product->get_image_id(), 'full' ) : [WOOCOMMERCE_HELPDESK_ASSETS_URL . '/images/default-product-img.png']
+				'img' => wp_get_attachment_image_src( $product->get_image_id(), 'full' ) ? wp_get_attachment_image_src( $product->get_image_id(), 'full' ) : [IBXFWL_HELPDESK_ASSETS_URL . '/images/default-product-img.png']
 			];
 
 			// wp_send_json_success($productId);
