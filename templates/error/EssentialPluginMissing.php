@@ -9,8 +9,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-if ( ! class_exists( 'WC_Inbox_Error_EssentialPluginMissing' ) ) {
-	class WC_Inbox_Error_EssentialPluginMissing {
+if ( ! class_exists( 'IBXFWL_Inbox_Error_EssentialPluginMissing' ) ) {
+	class IBXFWL_Inbox_Error_EssentialPluginMissing {
 		public static function showMissingMessage() {
 			echo '<h1>' . esc_html__('Inbox for WooCommerce', 'inbox-for-woocommerce') . '</h1>';
 			echo '<div class="notice notice-error settings-error">

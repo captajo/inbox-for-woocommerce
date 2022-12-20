@@ -10,8 +10,8 @@ if (!defined('ABSPATH')) {
 	exit; // Exit if accessed directly
 }
 
-if (!class_exists('WC_Inbox_Mail_AdminNewInquiryMessage')) {
-	class WC_Inbox_Mail_AdminNewInquiryMessage {
+if (!class_exists('IBXFWL_Inbox_Mail_AdminNewInquiryMessage')) {
+	class IBXFWL_Inbox_Mail_AdminNewInquiryMessage {
 	
 		public static function adminInquiryTemplate() {
 			return '

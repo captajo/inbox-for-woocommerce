@@ -9,9 +9,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-if ( ! class_exists( 'WC_Inbox_Sweito_CreateAccountParams' ) ) {
+if ( ! class_exists( 'IBXFWL_Inbox_Sweito_CreateAccountParams' ) ) {
 
-	class WC_Inbox_Sweito_CreateAccountParams {
+	class IBXFWL_Inbox_Sweito_CreateAccountParams {
 		
 		/** Variable: string */
 		public $firstName;
@@ -32,7 +32,7 @@ if ( ! class_exists( 'WC_Inbox_Sweito_CreateAccountParams' ) ) {
 		 * Set Site
 		 *
 		 * @param string $emailAddress
-		 * @return WC_Inbox_Sweito_CreateAccountParams
+		 * @return IBXFWL_Inbox_Sweito_CreateAccountParams
 		 */
 		public function setEmailAddress( $emailAddress) {
 			$this->emailAddress = $emailAddress;
@@ -43,7 +43,7 @@ if ( ! class_exists( 'WC_Inbox_Sweito_CreateAccountParams' ) ) {
 		 * Set Site
 		 *
 		 * @param string $siteAddress
-		 * @return WC_Inbox_Sweito_CreateAccountParams
+		 * @return IBXFWL_Inbox_Sweito_CreateAccountParams
 		 */
 		public function setSiteAddress( $siteAddress) {
 			$this->siteAddress = $siteAddress;
@@ -54,7 +54,7 @@ if ( ! class_exists( 'WC_Inbox_Sweito_CreateAccountParams' ) ) {
 		 * Set Company Name
 		 *
 		 * @param string $companyName
-		 * @return WC_Inbox_Sweito_CreateAccountParams
+		 * @return IBXFWL_Inbox_Sweito_CreateAccountParams
 		 */
 		public function setCompanyName( $companyName) {
 			$this->companyName = $companyName;
@@ -65,7 +65,7 @@ if ( ! class_exists( 'WC_Inbox_Sweito_CreateAccountParams' ) ) {
 		 * Set Last Name
 		 *
 		 * @param string $lastName
-		 * @return WC_Inbox_Sweito_CreateAccountParams
+		 * @return IBXFWL_Inbox_Sweito_CreateAccountParams
 		 */
 		public function setLastName( $lastName) {
 			$this->lastName = $lastName;
@@ -76,7 +76,7 @@ if ( ! class_exists( 'WC_Inbox_Sweito_CreateAccountParams' ) ) {
 		 * Set First Name
 		 *
 		 * @param string $firstName
-		 * @return WC_Inbox_Sweito_CreateAccountParams
+		 * @return IBXFWL_Inbox_Sweito_CreateAccountParams
 		 */
 		public function setFirstName( $firstName) {
 			$this->firstName = $firstName;

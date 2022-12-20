@@ -8,14 +8,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-class WC_Inbox_SettingFields {
+class IBXFWL_Inbox_SettingFields {
 	/**
 	 * Show Notification Tab Fields
 	 *
 	 * @return array
 	 */
 	public static function showNotificationTabFields() {
-		require_once(WOOCOMMERCE_SWEITO_INCLUDES_URL . '/SettingController.php');
+		require_once(IBXFWL_SWEITO_INCLUDES_URL . '/SettingController.php');
 
 		return array(
 			// Title
@@ -30,7 +30,7 @@ class WC_Inbox_SettingFields {
 				'type'      => 'checkbox',
 				'desc'      => esc_html__( 'When a new inquiry message is received', 'inbox-for-woocommerce' ),
 				'desc_tip'  => false,
-				'default'   => WC_Inbox_SettingController::DEFAULT_NOTIFICATION_WHEN_INQUIRY_RECEIVED,
+				'default'   => IBXFWL_Inbox_SettingController::DEFAULT_NOTIFICATION_WHEN_INQUIRY_RECEIVED,
 				'id'        => 'wcs_notification_when_inquiry_received',
 				'css'       => 'min-width:300px;'
 			),
@@ -39,7 +39,7 @@ class WC_Inbox_SettingFields {
 				'type'      => 'checkbox',
 				'desc'      => esc_html__( 'When a new inbox message is received', 'inbox-for-woocommerce' ),
 				'desc_tip'  => false,
-				'default'   => WC_Inbox_SettingController::DEFAULT_NOTIFICATION_WHEN_INBOX_RECEIVED,
+				'default'   => IBXFWL_Inbox_SettingController::DEFAULT_NOTIFICATION_WHEN_INBOX_RECEIVED,
 				'id'        => 'wcs_notification_when_inbox_received',
 				'css'       => 'min-width:300px;'
 			),
@@ -48,7 +48,7 @@ class WC_Inbox_SettingFields {
 				'type'      => 'checkbox',
 				'desc'      => esc_html__( 'When a customer replies inbox thread', 'inbox-for-woocommerce' ),
 				'desc_tip'  => false,
-				'default'   => WC_Inbox_SettingController::DEFAULT_NOTIFICATION_WHEN_CUSTOMER_REPLY_INBOX_RECEIVED,
+				'default'   => IBXFWL_Inbox_SettingController::DEFAULT_NOTIFICATION_WHEN_CUSTOMER_REPLY_INBOX_RECEIVED,
 				'id'        => 'wcs_notification_when_inbox_replied',
 				'css'       => 'min-width:300px;'
 			),
@@ -57,7 +57,7 @@ class WC_Inbox_SettingFields {
 				'type'      => 'checkbox',
 				'desc'      => esc_html__( 'When admin replied to an inquiry message received', 'inbox-for-woocommerce' ),
 				'desc_tip'  => false,
-				'default'   => WC_Inbox_SettingController::DEFAULT_NOTIFICATION_WHEN_ADMIN_REPLY_INQUIRY_RECEIVED,
+				'default'   => IBXFWL_Inbox_SettingController::DEFAULT_NOTIFICATION_WHEN_ADMIN_REPLY_INQUIRY_RECEIVED,
 				'id'        => 'wcs_notification_when_admin_reply_inquiry',
 				'css'       => 'min-width:300px;'
 			),
@@ -66,7 +66,7 @@ class WC_Inbox_SettingFields {
 				'type'      => 'checkbox',
 				'desc'      => esc_html__( 'When admin replied to inbox message received', 'inbox-for-woocommerce' ),
 				'desc_tip'  => false,
-				'default'   => WC_Inbox_SettingController::DEFAULT_NOTIFICATION_WHEN_ADMIN_REPLY_INBOX_RECEIVED,
+				'default'   => IBXFWL_Inbox_SettingController::DEFAULT_NOTIFICATION_WHEN_ADMIN_REPLY_INBOX_RECEIVED,
 				'id'        => 'wcs_notification_when_admin_reply_inbox',
 				'css'       => 'min-width:300px;'
 			),
@@ -84,7 +84,7 @@ class WC_Inbox_SettingFields {
 	 * @return array
 	 */
 	public static function showGeneralTabFields() {
-		require_once(WOOCOMMERCE_SWEITO_INCLUDES_URL . '/SettingController.php');
+		require_once(IBXFWL_SWEITO_INCLUDES_URL . '/SettingController.php');
 
 		return array(
 			// Title
@@ -146,7 +146,7 @@ class WC_Inbox_SettingFields {
 				'title'     => esc_html__( '- "General" type?', 'inbox-for-woocommerce' ),
 				'type'      => 'checkbox',
 				'desc_tip'  => false,
-				'default'   => WC_Inbox_SettingController::DEFAULT_GENERAL_INBOX_MESSAGE_TYPE,
+				'default'   => IBXFWL_Inbox_SettingController::DEFAULT_GENERAL_INBOX_MESSAGE_TYPE,
 				'id'        => 'wcs_allow_general_inbox_message_type',
 				'css'       => 'min-width:300px;'
 			),
@@ -154,7 +154,7 @@ class WC_Inbox_SettingFields {
 				'title'     => esc_html__( '- "Product Related" type?', 'inbox-for-woocommerce' ),
 				'type'      => 'checkbox',
 				'desc_tip'  => false,
-				'default'   => WC_Inbox_SettingController::DEFAULT_PRODUCT_RELATED_INBOX_MESSAGE_TYPE,
+				'default'   => IBXFWL_Inbox_SettingController::DEFAULT_PRODUCT_RELATED_INBOX_MESSAGE_TYPE,
 				'id'        => 'wcs_allow_product_related_inbox_message_type',
 				'css'       => 'min-width:300px;'
 			),
@@ -163,7 +163,7 @@ class WC_Inbox_SettingFields {
 				'type'      => 'wcs_checkbox_disabled',
 				'desc'      => esc_html__( 'This feature available on the full version only', 'inbox-for-woocommerce' ),
 				'desc_tip'  => false,
-				// 'default'   => WC_Inbox_SettingController::DEFAULT_ORDER_RELATED_INBOX_MESSAGE_TYPE,
+				// 'default'   => IBXFWL_Inbox_SettingController::DEFAULT_ORDER_RELATED_INBOX_MESSAGE_TYPE,
 				'id'        => 'wcs_allow',
 				'css'       => 'min-width:300px;'
 			),
@@ -172,7 +172,7 @@ class WC_Inbox_SettingFields {
 				'type'      => 'wcs_checkbox_disabled',
 				'desc'      => esc_html__( 'This feature available on the full version only', 'inbox-for-woocommerce' ),
 				'desc_tip'  => false,
-				// 'default'   => WC_Inbox_SettingController::DEFAULT_REFUND_INBOX_MESSAGE_TYPE,
+				// 'default'   => IBXFWL_Inbox_SettingController::DEFAULT_REFUND_INBOX_MESSAGE_TYPE,
 				'id'        => 'wcs_allow',
 				'css'       => 'min-width:300px;'
 			),
@@ -181,7 +181,7 @@ class WC_Inbox_SettingFields {
 				'type'      => 'wcs_checkbox_disabled',
 				'desc'      => esc_html__( 'This feature available on the full version only', 'inbox-for-woocommerce' ),
 				'desc_tip'  => false,
-				// 'default'   => WC_Inbox_SettingController::DEFAULT_DISPUTE_INBOX_MESSAGE_TYPE,
+				// 'default'   => IBXFWL_Inbox_SettingController::DEFAULT_DISPUTE_INBOX_MESSAGE_TYPE,
 				'id'        => 'wcs_allow',
 				'css'       => 'min-width:300px;'
 			),
@@ -199,7 +199,7 @@ class WC_Inbox_SettingFields {
 				'type'      => 'textarea',
 				'desc'      => esc_html__( 'Do you want to allow customer/guest users ask questions about listing', 'inbox-for-woocommerce' ),
 				'desc_tip'  => true,
-				'default'   => esc_html__(WC_Inbox_SettingController::DEFAULT_INQUIRY_SENT_RESPONSE, 'inbox-for-woocommerce'),
+				'default'   => esc_html__(IBXFWL_Inbox_SettingController::DEFAULT_INQUIRY_SENT_RESPONSE, 'inbox-for-woocommerce'),
 				'id'        => 'wcs_submitted_inquiry_form_response',
 				'css'       => 'min-width:300px;'
 			),
@@ -293,7 +293,7 @@ class WC_Inbox_SettingFields {
 	 * @return array
 	 */
 	public static function showThemeTabFields() {
-		require_once(WOOCOMMERCE_SWEITO_INCLUDES_URL . '/SettingController.php');
+		require_once(IBXFWL_SWEITO_INCLUDES_URL . '/SettingController.php');
 		return array(
 			// Title
 			array(
@@ -307,7 +307,7 @@ class WC_Inbox_SettingFields {
 				'id'        => 'wcs_ticket_thread_style',
 				'class'     => 'wc-enhanced-select',
 				'css'       => 'min-width:300px;',
-				'default'   => WC_Inbox_SettingController::DEFAULT_TICKET_THREAD_STYLE,
+				'default'   => IBXFWL_Inbox_SettingController::DEFAULT_TICKET_THREAD_STYLE,
 				'type'      => 'select',
 				'options'   => array(
 					'style-1'        => esc_html__( 'Default Style', 'inbox-for-woocommerce' ),
@@ -349,14 +349,14 @@ class WC_Inbox_SettingFields {
 				'id'        => 'wcs_inquiry_button_type',
 				'class'     => 'wc-enhanced-select',
 				'css'       => 'min-width:300px;',
-				// 'default'   => WC_Inbox_SettingController::DEFAULT_INQUIRY_BUTTON_TYPE,
+				// 'default'   => IBXFWL_Inbox_SettingController::DEFAULT_INQUIRY_BUTTON_TYPE,
 				'type'      => 'wcs_input_disabled',
 				'desc_tip' => true,
 			),
 			array(
 				'title'     => esc_html__( 'Button Color', 'inbox-for-woocommerce' ),
 				'type'      => 'wcs_input_disabled',
-				// 'default'   => WC_Inbox_SettingController::DEFAULT_INQUIRY_BUTTON_COLOR,
+				// 'default'   => IBXFWL_Inbox_SettingController::DEFAULT_INQUIRY_BUTTON_COLOR,
 				'desc'      => esc_html__( 'Default', 'inbox-for-woocommerce' ),
 				'desc_tip'  => true,
 				'id'        => 'wcs_inquiry_button_color',
@@ -365,7 +365,7 @@ class WC_Inbox_SettingFields {
 			array(
 				'title'     => esc_html__( 'Button Text Color', 'inbox-for-woocommerce' ),
 				'type'      => 'wcs_input_disabled',
-				'default'   => esc_html__(WC_Inbox_SettingController::DEFAULT_INQUIRY_BUTTON_TEXT_COLOR, 'inbox-for-woocommerce' ),
+				'default'   => esc_html__(IBXFWL_Inbox_SettingController::DEFAULT_INQUIRY_BUTTON_TEXT_COLOR, 'inbox-for-woocommerce' ),
 				'desc'      => esc_html__( 'Default', 'inbox-for-woocommerce' ),
 				'desc_tip'  => true,
 				'id'        => 'wcs_inquiry_button_text_color',
@@ -388,7 +388,7 @@ class WC_Inbox_SettingFields {
 				'id'        => 'wcs_inquiry_cta_background_type',
 				'class'     => 'wc-enhanced-select',
 				'css'       => 'min-width:300px;',
-				'default'   => WC_Inbox_SettingController::DEFAULT_INQUIRY_CTA_BACKGROUND_TYPE,
+				'default'   => IBXFWL_Inbox_SettingController::DEFAULT_INQUIRY_CTA_BACKGROUND_TYPE,
 				'type'      => 'select',
 				'options'   => array(
 					'color-filled'        => esc_html__( 'Color-Filled', 'inbox-for-woocommerce' ),
@@ -399,7 +399,7 @@ class WC_Inbox_SettingFields {
 			array(
 				'title'     => esc_html__( 'CTA Description Text', 'inbox-for-woocommerce' ),
 				'type'      => 'text',
-				'default'   => esc_html__(WC_Inbox_SettingController::DEFAULT_INQUIRY_CTA_TEXT, 'inbox-for-woocommerce' ),
+				'default'   => esc_html__(IBXFWL_Inbox_SettingController::DEFAULT_INQUIRY_CTA_TEXT, 'inbox-for-woocommerce' ),
 				'desc'      => esc_html__( 'The text displayed on CTA Banner', 'inbox-for-woocommerce' ),
 				'desc_tip'  => true,
 				'id'        => 'wcs_inquiry_cta_description_text',
@@ -408,7 +408,7 @@ class WC_Inbox_SettingFields {
 			array(
 				'title'     => esc_html__( 'CTA Button Text', 'inbox-for-woocommerce' ),
 				'type'      => 'text',
-				'default'   => esc_html__(WC_Inbox_SettingController::DEFAULT_INQUIRY_CTA_BUTTON_TEXT, 'inbox-for-woocommerce' ),
+				'default'   => esc_html__(IBXFWL_Inbox_SettingController::DEFAULT_INQUIRY_CTA_BUTTON_TEXT, 'inbox-for-woocommerce' ),
 				'desc'      => esc_html__( 'The text in the CTA Button', 'inbox-for-woocommerce' ),
 				'desc_tip'  => true,
 				'id'        => 'wcs_inquiry_cta_button_text',
@@ -417,7 +417,7 @@ class WC_Inbox_SettingFields {
 			array(
 				'title'     => esc_html__( 'CTA Background Color', 'inbox-for-woocommerce' ),
 				'type'      => 'color',
-				'default'   => WC_Inbox_SettingController::DEFAULT_INQUIRY_CTA_BACKGROUND_COLOR,
+				'default'   => IBXFWL_Inbox_SettingController::DEFAULT_INQUIRY_CTA_BACKGROUND_COLOR,
 				'desc'      => esc_html__( 'The background color of the CTA Banner (skip if "CTA Background Style" is not "Color-Filled")', 'inbox-for-woocommerce' ),
 				'desc_tip'  => true,
 				'id'        => 'wcs_inquiry_cta_background_color',
@@ -427,7 +427,7 @@ class WC_Inbox_SettingFields {
 			array(
 				'title'     => esc_html__( 'CTA Background Image Link', 'inbox-for-woocommerce' ),
 				'type'      => 'text',
-				'default'   => WC_Inbox_SettingController::DEFAULT_INQUIRY_CTA_BACKGROUND_LINK,
+				'default'   => IBXFWL_Inbox_SettingController::DEFAULT_INQUIRY_CTA_BACKGROUND_LINK,
 				'desc'      => esc_html__( 'The background color of the CTA Banner (skip if "CTA Background Style" is not "Background-Image")', 'inbox-for-woocommerce' ),
 				'desc_tip'  => true,
 				'id'        => 'wcs_inquiry_cta_background_link',
@@ -436,7 +436,7 @@ class WC_Inbox_SettingFields {
 			array(
 				'title'     => esc_html__( 'CTA Text Color', 'inbox-for-woocommerce' ),
 				'type'      => 'color',
-				'default'   => WC_Inbox_SettingController::DEFAULT_INQUIRY_CTA_TEXT_COLOR,
+				'default'   => IBXFWL_Inbox_SettingController::DEFAULT_INQUIRY_CTA_TEXT_COLOR,
 				'desc'      => esc_html__( 'The color of the CTA Banner Text', 'inbox-for-woocommerce' ),
 				'desc_tip'  => true,
 				'id'        => 'wcs_inquiry_cta_text_color',
@@ -445,7 +445,7 @@ class WC_Inbox_SettingFields {
 			array(
 				'title'     => esc_html__( 'CTA Button Color', 'inbox-for-woocommerce' ),
 				'type'      => 'color',
-				'default'   => WC_Inbox_SettingController::DEFAULT_INQUIRY_CTA_BUTTON_COLOR,
+				'default'   => IBXFWL_Inbox_SettingController::DEFAULT_INQUIRY_CTA_BUTTON_COLOR,
 				'desc'      => esc_html__( 'The color of the button in CTA Banner', 'inbox-for-woocommerce' ),
 				'desc_tip'  => true,
 				'id'        => 'wcs_inquiry_cta_button_color',

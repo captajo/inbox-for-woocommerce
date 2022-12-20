@@ -22,14 +22,14 @@ if ( ! class_exists( 'WC_Inbox_UninstallPlugin' ) ) {
 				require_once plugin_dir_path( __FILE__ ) . 'includes/DatabaseController.php';
 
 				// remove saved options
-				$optionNames = WC_Inbox_SettingController::getSavedOptionNames();
+				$optionNames = IBXFWL_Inbox_SettingController::getSavedOptionNames();
 
 				// remove DB version
-				delete_option(WC_Inbox_DatabaseController::OPTION_VERSION);
+				delete_option(IBXFWL_Inbox_DatabaseController::OPTION_VERSION);
 
 				// remove database tables
-				WC_Inbox_DatabaseController::removedSavedOptions($optionNames);
-				WC_Inbox_DatabaseController::dropExtensionTables();
+				IBXFWL_Inbox_DatabaseController::removedSavedOptions($optionNames);
+				IBXFWL_Inbox_DatabaseController::dropExtensionTables();
 
 			}
 			

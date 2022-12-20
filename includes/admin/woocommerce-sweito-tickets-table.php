@@ -7,7 +7,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
-class WooCommerceSweitoTicketsTable extends WP_List_Table {
+class IBXFWL_WCSweitoTicketsTable extends WP_List_Table {
 	
 	public function __construct() {
 		parent::__construct( array(
@@ -56,13 +56,13 @@ class WooCommerceSweitoTicketsTable extends WP_List_Table {
 	 * Prepare the table with different parameters, pagination, columns and table elements
 	 */
 	public function prepare_items() {
-		require_once(WOOCOMMERCE_SWEITO_INCLUDES_URL . '/DatabaseController.php');
+		require_once(IBXFWL_SWEITO_INCLUDES_URL . '/DatabaseController.php');
 
 		global $wpdb;
 		$screen = get_current_screen();
 	
 		/* -- Preparing your query -- */
-		$tableName = $wpdb->prefix . WC_Inbox_DatabaseController::DB_TICKETS_TABLE;
+		$tableName = $wpdb->prefix . IBXFWL_Inbox_DatabaseController::DB_TICKETS_TABLE;
 		$query = "SELECT * FROM $tableName";
 
 		$currentUser = wp_get_current_user();
@@ -71,7 +71,7 @@ class WooCommerceSweitoTicketsTable extends WP_List_Table {
 		$section = isset($_GET['section']) ? sanitize_text_field($_GET['section']) : '';
 		$inboxUserId = 0;
 		if ( !in_array('administrator', $roles) && in_array('inbox-for-woocommerce-agent', $roles) ) {
-			$inboxUserId = WC_Inbox_DatabaseController::getInboxUser($currentUser->user_email, $currentUser->ID);
+			$inboxUserId = IBXFWL_Inbox_DatabaseController::getInboxUser($currentUser->user_email, $currentUser->ID);
 			$query = $query . ' WHERE assigned_agent_id = ' . ( $inboxUserId );
 
 			if ($section) {
@@ -193,7 +193,7 @@ $query.=' LIMIT ' . (int) $offset . ',' . (int) $perpage;
 		}
 		
 		
-		$tableName = $wpdb->prefix . WC_Inbox_DatabaseController::DB_USERS_TABLE;
+		$tableName = $wpdb->prefix . IBXFWL_Inbox_DatabaseController::DB_USERS_TABLE;
 		$users = $wpdb->get_results($wpdb->prepare('SELECT * from %1s', $tableName), ARRAY_A);
 		$allUsers = [];
 		$allUserWPIDs = [];
@@ -344,7 +344,7 @@ $query.=' LIMIT ' . (int) $offset . ',' . (int) $perpage;
 	}
 
 	public function process_bulk_action() { 
-		require_once(WOOCOMMERCE_SWEITO_INCLUDES_URL . '/TicketController.php');
+		require_once(IBXFWL_SWEITO_INCLUDES_URL . '/TicketController.php');
 
 		$nonce = isset($_POST['wcs_wpnonce']) ? sanitize_text_field($_POST['wcs_wpnonce']) : '';
 		if ( ! wp_verify_nonce( $nonce, 'wcs-ticket-table-nonce' ) ) {
@@ -356,7 +356,7 @@ $query.=' LIMIT ' . (int) $offset . ',' . (int) $perpage;
 		|| ( isset( $_POST['action2'] ) && 'bulk-delete' == $_POST['action2'] )
 		) {
 			$deleteIds = isset($_POST['bulk-select']) ? array_map( 'sanitize_text_field', $_POST['bulk-select'] ) : '';
-			WC_Inbox_TicketController::adminDeleteTickets($deleteIds);
+			IBXFWL_Inbox_TicketController::adminDeleteTickets($deleteIds);
 
 			echo '<div class="updated">
                     <p>' . count($deleteIds) . ' ' . esc_html__('Tickets has been deleted successfully!', 'inbox-for-woocommerce') . '</p>
@@ -367,7 +367,7 @@ $query.=' LIMIT ' . (int) $offset . ',' . (int) $perpage;
 		|| ( isset( $_POST['action2'] ) && 'move-to-open' == $_POST['action2'] )
 		) {
 			$ticketIds = isset($_POST['bulk-select']) ? array_map( 'sanitize_text_field', $_POST['bulk-select']) : '';
-			WC_Inbox_TicketController::adminMoveTicketToStatus($ticketIds, 'open');
+			IBXFWL_Inbox_TicketController::adminMoveTicketToStatus($ticketIds, 'open');
 
 			echo '<div class="updated">
                     <p>' . count($ticketIds) . ' ' . esc_html__('Tickets has been move to OPEN status successfully!', 'inbox-for-woocommerce') . '</p>
@@ -378,7 +378,7 @@ $query.=' LIMIT ' . (int) $offset . ',' . (int) $perpage;
 		|| ( isset( $_POST['action2'] ) && 'move-to-closed' == $_POST['action2'] )
 		) {
 			$ticketIds = isset($_POST['bulk-select']) ? array_map( 'sanitize_text_field', $_POST['bulk-select']) : '';
-			WC_Inbox_TicketController::adminMoveTicketToStatus($ticketIds, 'closed');
+			IBXFWL_Inbox_TicketController::adminMoveTicketToStatus($ticketIds, 'closed');
 
 			echo '<div class="updated">
                     <p>' . count($ticketIds) . ' ' . esc_html__('Tickets has been moved to CLOSED status successfully!', 'inbox-for-woocommerce') . '</p>
@@ -389,7 +389,7 @@ $query.=' LIMIT ' . (int) $offset . ',' . (int) $perpage;
 		|| ( isset( $_POST['action2'] ) && 'move-to-archive' == $_POST['action2'] )
 		) {
 			$ticketIds = isset($_POST['bulk-select']) ? array_map( 'sanitize_text_field', $_POST['bulk-select']) : '';
-			WC_Inbox_TicketController::adminMoveTicketToStatus($ticketIds, 'archive');
+			IBXFWL_Inbox_TicketController::adminMoveTicketToStatus($ticketIds, 'archive');
 
 			echo '<div class="updated">
                     <p>' . count($ticketIds) . ' ' . esc_html__('Tickets has been moved to ARCHIVE status successfully!', 'inbox-for-woocommerce') . '</p>

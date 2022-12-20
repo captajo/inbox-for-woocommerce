@@ -9,8 +9,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-if ( ! class_exists( 'WC_Inbox_SettingController' ) ) {
-	class WC_Inbox_SettingController {
+if ( ! class_exists( 'IBXFWL_Inbox_SettingController' ) ) {
+	class IBXFWL_Inbox_SettingController {
 
 		const SETTING_GUEST_NAME = 'woocommerce_inbox_guest_name';
 		const SETTING_INQUIRY_SENT_RESPONSE = 'wcs_submitted_inquiry_form_response';
@@ -57,7 +57,7 @@ if ( ! class_exists( 'WC_Inbox_SettingController' ) ) {
 		const DEFAULT_INQUIRY_CTA_TEXT = 'Not sure it matches your specification?';
 		const DEFAULT_INQUIRY_CTA_TEXT_COLOR = '#ffffff';
 		const DEFAULT_INQUIRY_CTA_BACKGROUND_COLOR = '#007cba';
-		const DEFAULT_INQUIRY_CTA_BACKGROUND_LINK = WOOCOMMERCE_HELPDESK_ASSETS_URL . '/images/default-cta-background.jpg';
+		const DEFAULT_INQUIRY_CTA_BACKGROUND_LINK = IBXFWL_HELPDESK_ASSETS_URL . '/images/default-cta-background.jpg';
 		const DEFAULT_INQUIRY_CTA_BUTTON_TEXT = 'Ask the Seller';
 		const DEFAULT_INQUIRY_CTA_BUTTON_COLOR = '#ffffff';
 		const DEFAULT_INQUIRY_CTA_BACKGROUND_TYPE = 'background-image';

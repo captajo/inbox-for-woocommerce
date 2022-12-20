@@ -9,15 +9,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-if ( ! class_exists( 'WC_Inbox_Admin_TicketThreadPreview' ) ) {
-	class WC_Inbox_Admin_TicketThreadPreview {
+if ( ! class_exists( 'IBXFWL_Inbox_Admin_TicketThreadPreview' ) ) {
+	class IBXFWL_Inbox_Admin_TicketThreadPreview {
 		public static function showTicketThread() {
 			self::importDirectories();
 
 			$currentUser = wp_get_current_user();
 			$roles = ( array ) $currentUser->roles;
 
-			$setStyle = WC_Inbox_SettingController::defaultTicketThreadStyle();
+			$setStyle = IBXFWL_Inbox_SettingController::defaultTicketThreadStyle();
 
 			$allTickets = self::getActiveTickets();
 			$ticket = self::getTicketThread();
@@ -104,13 +104,13 @@ if ( ! class_exists( 'WC_Inbox_Admin_TicketThreadPreview' ) ) {
 
 			// mark as read
 			if (( null == $ticket['read_at'] ) && ( !$ticket['agent_wp_user_id'] || ( $ticket['agent_wp_user_id'] == $currentUser->ID ) ) ) {
-				WC_Inbox_TicketController::adminUpdateTicketReadAt([$ticket['ref']]);
+				IBXFWL_Inbox_TicketController::adminUpdateTicketReadAt([$ticket['ref']]);
 			}
 		}
 
 		private static function processFormSubmission() {
 			echo '<div class="updated">
-                    <p>' . esc_html__('You are currently using the free version (light-version). UPGRADE to the full version to access more features like different chat display themes, different inbox categories and others.', 'inbox-for-woocommerce') . ' <a target="_blank" href="' . esc_html(WOOCOMMERCE_SWEITO_PRODUCT_URL) . '">' . esc_html__('Click here to purchase full version now', 'inbox-for-woocommerce') . '</a></p></div>';
+                    <p>' . esc_html__('You are currently using the free version (light-version). UPGRADE to the full version to access more features like different chat display themes, different inbox categories and others.', 'inbox-for-woocommerce') . ' <a target="_blank" href="' . esc_html(IBXFWL_SWEITO_PRODUCT_URL) . '">' . esc_html__('Click here to purchase full version now', 'inbox-for-woocommerce') . '</a></p></div>';
 		}
 
         private static function upgradePopUp()
@@ -123,7 +123,7 @@ if ( ! class_exists( 'WC_Inbox_Admin_TicketThreadPreview' ) ) {
                         </div>
                         <div class="wcs-row">
                             <div class="wcs-col-4 wcs-text-right">
-                                <img src="' . WOOCOMMERCE_HELPDESK_ASSETS_URL . '/images/upgrade.png" class="wcs-upgrade-img" /> &nbsp;
+                                <img src="' . IBXFWL_HELPDESK_ASSETS_URL . '/images/upgrade.png" class="wcs-upgrade-img" /> &nbsp;
                             </div>
                             <div class="wcs-col-8">
                                 <div class="wcs-upgrade-title">' . esc_html__('UPGRADE TO FULL VERSION', 'inbox-for-woocommerce') . '</div>
@@ -132,25 +132,25 @@ if ( ! class_exists( 'WC_Inbox_Admin_TicketThreadPreview' ) ) {
                         <div class="wcs-row">
                             <div class="wcs-col-4">
                                 <div class="wcs-row">
-                                    <div class="wcs-col-2 wcs-text-right"><img src="' . WOOCOMMERCE_HELPDESK_ASSETS_URL . '/images/upgrade-check.png" class="wcs-upgrade-check" /></div>
+                                    <div class="wcs-col-2 wcs-text-right"><img src="' . IBXFWL_HELPDESK_ASSETS_URL . '/images/upgrade-check.png" class="wcs-upgrade-check" /></div>
                                     <div class="wcs-col-10">
                                         <div class="wcs-upgrade-check-list">' . esc_html__('Multiple Chat Themes', 'inbox-for-woocommerce') . '</div>
                                     </div>
                                 </div>
                                 <div class="wcs-row">
-                                    <div class="wcs-col-2 wcs-text-right"><img src="' . WOOCOMMERCE_HELPDESK_ASSETS_URL . '/images/upgrade-check.png" class="wcs-upgrade-check" /></div>
+                                    <div class="wcs-col-2 wcs-text-right"><img src="' . IBXFWL_HELPDESK_ASSETS_URL . '/images/upgrade-check.png" class="wcs-upgrade-check" /></div>
                                     <div class="wcs-col-10">
                                         <div class="wcs-upgrade-check-list">' . esc_html__('Additional Message Type', 'inbox-for-woocommerce') . '</div>
                                     </div>
                                 </div>
                                 <div class="wcs-row">
-                                    <div class="wcs-col-2 wcs-text-right"><img src="' . WOOCOMMERCE_HELPDESK_ASSETS_URL . '/images/upgrade-check.png" class="wcs-upgrade-check" /></div>
+                                    <div class="wcs-col-2 wcs-text-right"><img src="' . IBXFWL_HELPDESK_ASSETS_URL . '/images/upgrade-check.png" class="wcs-upgrade-check" /></div>
                                     <div class="wcs-col-10">
                                         <div class="wcs-upgrade-check-list">' . esc_html__('Unlocked Preview Sidebar', 'inbox-for-woocommerce') . '</div>
                                     </div>
                                 </div>
                                 <div class="wcs-row">
-                                    <div class="wcs-col-2 wcs-text-right"><img src="' . WOOCOMMERCE_HELPDESK_ASSETS_URL . '/images/upgrade-check.png" class="wcs-upgrade-check" /></div>
+                                    <div class="wcs-col-2 wcs-text-right"><img src="' . IBXFWL_HELPDESK_ASSETS_URL . '/images/upgrade-check.png" class="wcs-upgrade-check" /></div>
                                     <div class="wcs-col-10">
                                         <div class="wcs-upgrade-check-list">' . esc_html__('Ticket Archives', 'inbox-for-woocommerce') . '</div>
                                     </div>
@@ -165,7 +165,7 @@ if ( ! class_exists( 'WC_Inbox_Admin_TicketThreadPreview' ) ) {
                             <div class="wcs-col-8 wcs-text-center">
 
                             <div class="wcs-upgrade-text">' . esc_html__('You can get the full package now by clicking on the button below', 'inbox-for-woocommerce') . '</div>
-                            <a class="wcs-purchase-link" href="' . esc_html(WOOCOMMERCE_SWEITO_PRODUCT_URL) . '" target="_blank"><div class="wcs-upgrade-purchase-button">' . esc_html__('Purchase Now', 'inbox-for-woocommerce') . '</div></a>
+                            <a class="wcs-purchase-link" href="' . esc_html(IBXFWL_SWEITO_PRODUCT_URL) . '" target="_blank"><div class="wcs-upgrade-purchase-button">' . esc_html__('Purchase Now', 'inbox-for-woocommerce') . '</div></a>
                             
                             </div>
                         </div>
@@ -198,7 +198,7 @@ if ( ! class_exists( 'WC_Inbox_Admin_TicketThreadPreview' ) ) {
 			} elseif (function_exists('get_wpupa_url') && $ticket['is_customer'] && $ticket['user_wp_user_id']) { 
 				echo '<img src="' . esc_html(get_wpupa_url($ticket['user_wp_user_id'], ['size' => 'thumbnail'])) . '" class="wcs-ticket-thread-user-profile-img-preview" />';
 			} else {
-				echo '<img src="' . esc_html(WOOCOMMERCE_HELPDESK_ASSETS_URL) . '/images/a0.png" class="wcs-ticket-thread-user-profile-img-preview" />';
+				echo '<img src="' . esc_html(IBXFWL_HELPDESK_ASSETS_URL) . '/images/a0.png" class="wcs-ticket-thread-user-profile-img-preview" />';
 			}
 							
 			echo '</div>
@@ -230,7 +230,7 @@ if ( ! class_exists( 'WC_Inbox_Admin_TicketThreadPreview' ) ) {
                             </div>
                             <div class="wcs-col-2 wcs-text-left">
                                 <button onClick="sendTicketThreadReply()" class="button button-primary wcs-button-block" id="wooCommerceSweitoInboxReplyButton">' . esc_html__('Send', 'inbox-for-woocommerce') . '</button>
-                                <div class="wcs-margin-top-10 wcs-text-center" style="width: 100%;"><button class="button wcs-button-block" onClick="(document.getElementsByClassName(\'wcs-upgrade-background\')[0]).style.display = \'block\'"> <img src="' . esc_html(WOOCOMMERCE_HELPDESK_ASSETS_URL) . '/images/paperclip-solid.svg" style="width: 14px; margin-left: 10px" /> ' . esc_html__('Attach File', 'inbox-for-woocommerce') . '</button></div> <br/>
+                                <div class="wcs-margin-top-10 wcs-text-center" style="width: 100%;"><button class="button wcs-button-block" onClick="(document.getElementsByClassName(\'wcs-upgrade-background\')[0]).style.display = \'block\'"> <img src="' . esc_html(IBXFWL_HELPDESK_ASSETS_URL) . '/images/paperclip-solid.svg" style="width: 14px; margin-left: 10px" /> ' . esc_html__('Attach File', 'inbox-for-woocommerce') . '</button></div> <br/>
                             </div>
                         </div>
                     </div>
@@ -314,7 +314,7 @@ if ( ! class_exists( 'WC_Inbox_Admin_TicketThreadPreview' ) ) {
 						if ( 'jpg' == $attachmentExt[1] || 'jpeg' == $attachmentExt[1] || 'png' == $attachmentExt[1] ) {
 							$displayIcon = $attachment['url'];
 						} else {
-							$displayIcon = WOOCOMMERCE_HELPDESK_ASSETS_URL . '/images/pdf-icon.png'; // part to pdf preview
+							$displayIcon = IBXFWL_HELPDESK_ASSETS_URL . '/images/pdf-icon.png'; // part to pdf preview
 						}
 
 						if ( $thread['is_you'] ) {
@@ -437,7 +437,7 @@ if ( ! class_exists( 'WC_Inbox_Admin_TicketThreadPreview' ) ) {
 						if ( 'jpg' == $attachmentExt[1] || 'jpeg' == $attachmentExt[1] || 'png' == $attachmentExt[1] ) {
 							$displayIcon = $attachment['url'];
 						} else {
-							$displayIcon = WOOCOMMERCE_HELPDESK_ASSETS_URL . '/images/pdf-icon.png'; // part to pdf preview
+							$displayIcon = IBXFWL_HELPDESK_ASSETS_URL . '/images/pdf-icon.png'; // part to pdf preview
 						}
 
 						if ( $thread['is_you'] ) {
@@ -556,7 +556,7 @@ if ( ! class_exists( 'WC_Inbox_Admin_TicketThreadPreview' ) ) {
 						if ( 'jpg' == $attachmentExt[1] || 'jpeg' == $attachmentExt[1] || 'png' == $attachmentExt[1] ) {
 							$displayIcon = $attachment['url'];
 						} else {
-							$displayIcon = WOOCOMMERCE_HELPDESK_ASSETS_URL . '/images/pdf-icon.png'; // part to pdf preview
+							$displayIcon = IBXFWL_HELPDESK_ASSETS_URL . '/images/pdf-icon.png'; // part to pdf preview
 						}
 
 						if ( $thread['is_you'] ) {
@@ -669,19 +669,19 @@ if ( ! class_exists( 'WC_Inbox_Admin_TicketThreadPreview' ) ) {
 		}
 
 		private static function importDirectories() {
-			require_once WOOCOMMERCE_SWEITO_INCLUDES_URL . '/SettingController.php';
-			require_once WOOCOMMERCE_SWEITO_INCLUDES_URL . '/TicketController.php';
+			require_once IBXFWL_SWEITO_INCLUDES_URL . '/SettingController.php';
+			require_once IBXFWL_SWEITO_INCLUDES_URL . '/TicketController.php';
 		}
 
 		private static function getActiveTickets() {
-			return WC_Inbox_TicketController::getAdminUserActiveTickets();
+			return IBXFWL_Inbox_TicketController::getAdminUserActiveTickets();
 		}
 
 		private static function getTicketThread() { 
 			$reference = isset($_GET['reference']) ? sanitize_text_field($_GET['reference']) : '';
 
 			$currentUser = wp_get_current_user();
-			$ticket = WC_Inbox_TicketController::getAdminUserTicketThreads($currentUser->data->user_email, $currentUser->ID, $reference);
+			$ticket = IBXFWL_Inbox_TicketController::getAdminUserTicketThreads($currentUser->data->user_email, $currentUser->ID, $reference);
 
 			return $ticket;
 		}

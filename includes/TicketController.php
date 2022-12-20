@@ -9,8 +9,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-if ( ! class_exists( 'WC_Inbox_TicketController' ) ) {
-	class WC_Inbox_TicketController {
+if ( ! class_exists( 'IBXFWL_Inbox_TicketController' ) ) {
+	class IBXFWL_Inbox_TicketController {
 		const STATUS_NEW = 'new';
 		const STATUS_OPEN = 'open';
 		const STATUS_CLOSED = 'closed';
@@ -40,7 +40,7 @@ if ( ! class_exists( 'WC_Inbox_TicketController' ) ) {
 return;
 			}
 
-			WC_Inbox_DatabaseController::updateBulkTicketStatus($ticketIds, $status);
+			IBXFWL_Inbox_DatabaseController::updateBulkTicketStatus($ticketIds, $status);
 		}
 
 		/**
@@ -53,18 +53,18 @@ return;
 			self::importDirectories();
 
 			// get all threads ids
-			$threadWithAttachmentIds = WC_Inbox_DatabaseController::getTicketThreadIdsThatHasAttachmentsForAdmin($ticketIds);
+			$threadWithAttachmentIds = IBXFWL_Inbox_DatabaseController::getTicketThreadIdsThatHasAttachmentsForAdmin($ticketIds);
 
 			// remove saved attachments
 			if (count($threadWithAttachmentIds) > 0) {
-				WC_Inbox_DatabaseController::deleteTicketAttachmentsForAdmin($threadWithAttachmentIds);
+				IBXFWL_Inbox_DatabaseController::deleteTicketAttachmentsForAdmin($threadWithAttachmentIds);
 			}
 
 			// remove ticket products
-			WC_Inbox_DatabaseController::deleteTicketProductsForAdmin($ticketIds);
+			IBXFWL_Inbox_DatabaseController::deleteTicketProductsForAdmin($ticketIds);
 
 			// remove save threads
-			WC_Inbox_DatabaseController::deleteTicketForAdmin($ticketIds);
+			IBXFWL_Inbox_DatabaseController::deleteTicketForAdmin($ticketIds);
 		}
 
 		/**
@@ -90,7 +90,7 @@ return;
 				$selectedStatus = [self::STATUS_NEW, self::STATUS_OPEN, self::STATUS_CLOSED, self::STATUS_ARCHIVE];
 			}
 
-			return WC_Inbox_DatabaseController::getTicketCount($selectedStatus);
+			return IBXFWL_Inbox_DatabaseController::getTicketCount($selectedStatus);
 		}
 
 		/**
@@ -103,14 +103,14 @@ return;
 			self::importDirectories();
 
 			foreach ($references as $reference) {
-				$ticketId = WC_Inbox_DatabaseController::getTicketIdByReferenceForAdmin($reference);
+				$ticketId = IBXFWL_Inbox_DatabaseController::getTicketIdByReferenceForAdmin($reference);
 				if (!$ticketId ) {
 return;
 				}
 
 				$wordPressOffset = get_option('gmt_offset');
 				$wordPressOffset = $wordPressOffset ? $wordPressOffset : 0;
-				WC_Inbox_DatabaseController::updateTicketAdminReadAt($ticketId, gmdate('Y-m-d H:i:s', strtotime("+$wordPressOffset hours")));
+				IBXFWL_Inbox_DatabaseController::updateTicketAdminReadAt($ticketId, gmdate('Y-m-d H:i:s', strtotime("+$wordPressOffset hours")));
 			}
 		}
 
@@ -127,25 +127,25 @@ return;
 			self::importDirectories();
 
 			// Create Users
-			$agentId = WC_Inbox_DatabaseController::createOrGetInboxUser($name, $email, $wpAgentId);
+			$agentId = IBXFWL_Inbox_DatabaseController::createOrGetInboxUser($name, $email, $wpAgentId);
 
 			foreach ($references as $reference) {
-				$ticketId = WC_Inbox_DatabaseController::getTicketIdByReferenceForAdmin($reference);
+				$ticketId = IBXFWL_Inbox_DatabaseController::getTicketIdByReferenceForAdmin($reference);
 				if (!$ticketId ) {
 return;
 				}
 
-				$ticket = WC_Inbox_DatabaseController::getTicketByReferenceForAdmin($reference);
+				$ticket = IBXFWL_Inbox_DatabaseController::getTicketByReferenceForAdmin($reference);
 
 				if ( $ticket['assigned_agent_id'] == $agentId ) {
 					continue;
 				}
 
-				WC_Inbox_DatabaseController::updateTicketAssignedAgent($ticketId, $agentId);
+				IBXFWL_Inbox_DatabaseController::updateTicketAssignedAgent($ticketId, $agentId);
 
 				$currentUser = wp_get_current_user();
 				if ($currentUser->ID != $wpAgentId) {
-					WC_Inbox_MailController::sendAgentNewTicketNotice($email, $name);
+					IBXFWL_Inbox_MailController::sendAgentNewTicketNotice($email, $name);
 				}
 			}
 		}
@@ -161,12 +161,12 @@ return;
 			self::importDirectories();
 
 			foreach ($references as $reference) {
-				$ticketId = WC_Inbox_DatabaseController::getTicketIdByReferenceForAdmin($reference);
+				$ticketId = IBXFWL_Inbox_DatabaseController::getTicketIdByReferenceForAdmin($reference);
 				if (!$ticketId ) {
 return;
 				}
 
-				WC_Inbox_DatabaseController::updateTicketStatus($ticketId, $status);
+				IBXFWL_Inbox_DatabaseController::updateTicketStatus($ticketId, $status);
 			}
 		}
 
@@ -181,21 +181,21 @@ return;
 		public static function adminReplyTicketThread( $wpUserEmail, $wpUserId, $ref, $description, $attachments) {
 			self::importDirectories();
 
-			$inboxUserId = WC_Inbox_DatabaseController::getInboxUser($wpUserEmail, $wpUserId);
+			$inboxUserId = IBXFWL_Inbox_DatabaseController::getInboxUser($wpUserEmail, $wpUserId);
 
-			$ticketId = WC_Inbox_DatabaseController::getTicketIdByReferenceForAdmin($ref);
+			$ticketId = IBXFWL_Inbox_DatabaseController::getTicketIdByReferenceForAdmin($ref);
 
 			if (!$ticketId ) {
 return;
 			}
 
 			// get ticket
-			$ticket = WC_Inbox_DatabaseController::getTicketByReferenceForAdmin($ref);
+			$ticket = IBXFWL_Inbox_DatabaseController::getTicketByReferenceForAdmin($ref);
 
 			// Add Ticket Thread
 			$wordPressOffset = get_option('gmt_offset');
 			$wordPressOffset = $wordPressOffset ? $wordPressOffset : 0;
-			WC_Inbox_DatabaseController::addTicketThread($ticketId, $inboxUserId, $description, self::STATUS_OPEN, gmdate('Y-m-d H:i:s', strtotime("+$wordPressOffset hours")), null, $attachments);
+			IBXFWL_Inbox_DatabaseController::addTicketThread($ticketId, $inboxUserId, $description, self::STATUS_OPEN, gmdate('Y-m-d H:i:s', strtotime("+$wordPressOffset hours")), null, $attachments);
 
 			if (( self::TYPE_INQUIRY == $ticket['type'] ) && ( 0 < count($ticket['products']) ) ) {
 				$lastCustomerMessage = '';
@@ -207,13 +207,13 @@ return;
 				}
 
 				// send inquiry type of mail
-				WC_Inbox_MailController::sendCustomerInquiryEmailReply(
+				IBXFWL_Inbox_MailController::sendCustomerInquiryEmailReply(
 					$ticket['user_email'], $ticket['products'][0], $lastCustomerMessage, $description
 				);
 			} else {
 
 				// send inquiry type of mail
-				WC_Inbox_MailController::sendCustomerMessageEmailReply(
+				IBXFWL_Inbox_MailController::sendCustomerMessageEmailReply(
 					$ticket['user_email'], $description
 				);
 			}
@@ -227,7 +227,7 @@ return;
 		public static function getAdminUserActiveTickets() {
 			self::importDirectories();
 
-			$tickets = WC_Inbox_DatabaseController::getActiveTicketsForAdmin([
+			$tickets = IBXFWL_Inbox_DatabaseController::getActiveTicketsForAdmin([
 				self::STATUS_OPEN,
 				self::STATUS_NEW
 			]);
@@ -244,8 +244,8 @@ return;
 		public static function getAdminUserTicketThreads( $wpUserEmail, $wpUserId, $ref) {
 			self::importDirectories();
 
-			$inboxUserId = WC_Inbox_DatabaseController::getInboxUser($wpUserEmail, $wpUserId);
-			$ticket = WC_Inbox_DatabaseController::getTicketThreadByUserIdAndReferenceForAdmin($inboxUserId, $ref);
+			$inboxUserId = IBXFWL_Inbox_DatabaseController::getInboxUser($wpUserEmail, $wpUserId);
+			$ticket = IBXFWL_Inbox_DatabaseController::getTicketThreadByUserIdAndReferenceForAdmin($inboxUserId, $ref);
 
 			return $ticket;
 		}
@@ -261,32 +261,32 @@ return;
 		public static function userReplyTicketThread( $wpUserId, $ref, $description, $attachments) {
 			self::importDirectories();
 
-			$inboxUserId = WC_Inbox_DatabaseController::getInboxUser('', $wpUserId);
+			$inboxUserId = IBXFWL_Inbox_DatabaseController::getInboxUser('', $wpUserId);
 
-			$ticketId = WC_Inbox_DatabaseController::getTicketIdByReference($inboxUserId, $ref);
+			$ticketId = IBXFWL_Inbox_DatabaseController::getTicketIdByReference($inboxUserId, $ref);
 
 			if (!$ticketId ) {
 return;
 			}
 
 			// get ticket
-			$ticket = WC_Inbox_DatabaseController::getTicketByReference($inboxUserId, $ref);
+			$ticket = IBXFWL_Inbox_DatabaseController::getTicketByReference($inboxUserId, $ref);
 
 			// Add Ticket Thread
 			$wordPressOffset = get_option('gmt_offset');
 			$wordPressOffset = $wordPressOffset ? $wordPressOffset : 0;
-			WC_Inbox_DatabaseController::addTicketThread($ticketId, $inboxUserId, $description, self::STATUS_OPEN, null, gmdate('Y-m-d H:i:s', strtotime("+$wordPressOffset hours")), $attachments);
+			IBXFWL_Inbox_DatabaseController::addTicketThread($ticketId, $inboxUserId, $description, self::STATUS_OPEN, null, gmdate('Y-m-d H:i:s', strtotime("+$wordPressOffset hours")), $attachments);
 
 			// check store location
 			if ( self::checkIfExternalHelpdesk() ) {
-				require_once WOOCOMMERCE_SWEITO_INCLUDES_URL . '/api/sweito/TicketService.php';
-				WC_Inbox_Sweito_TicketService::sendNewTicketToHelpdesk($ticketId);
+				require_once IBXFWL_SWEITO_INCLUDES_URL . '/api/sweito/TicketService.php';
+				IBXFWL_Inbox_Sweito_TicketService::sendNewTicketToHelpdesk($ticketId);
 				return;
 			}
 
 			if ($ticket['assigned_agent_email']) {
 				// send admin email notice
-				WC_Inbox_MailController::sendAdminInboxMessageReply(
+				IBXFWL_Inbox_MailController::sendAdminInboxMessageReply(
 					$ticket['assigned_agent_email'], $description
 				);
 			}
@@ -301,13 +301,13 @@ return;
 		public static function getUserTicketThreads( $wpUserId, $ref) {
 			self::importDirectories();
 
-			$inboxUserId = WC_Inbox_DatabaseController::getInboxUser('', $wpUserId);
-			$ticket = WC_Inbox_DatabaseController::getTicketThreadByUserIdAndReference($inboxUserId, $ref);
+			$inboxUserId = IBXFWL_Inbox_DatabaseController::getInboxUser('', $wpUserId);
+			$ticket = IBXFWL_Inbox_DatabaseController::getTicketThreadByUserIdAndReference($inboxUserId, $ref);
 
 			if ( !$ticket['read_at'] ) {
 				$wordPressOffset = get_option('gmt_offset');
 				$wordPressOffset = $wordPressOffset ? $wordPressOffset : 0;
-				WC_Inbox_DatabaseController::updateTicketUserReadAt($ticket['id'], gmdate('Y-m-d H:i:s', strtotime("+$wordPressOffset hours")));
+				IBXFWL_Inbox_DatabaseController::updateTicketUserReadAt($ticket['id'], gmdate('Y-m-d H:i:s', strtotime("+$wordPressOffset hours")));
 			}
 
 			if ( isset($ticket['id']) ) {
@@ -325,8 +325,8 @@ unset($ticket['id']);
 		public static function getUserTickets( $wpUserId) {
 			self::importDirectories();
 
-			$inboxUserId = WC_Inbox_DatabaseController::getInboxUser('', $wpUserId); 
-			$tickets = WC_Inbox_DatabaseController::getTicketsByUserId($inboxUserId);
+			$inboxUserId = IBXFWL_Inbox_DatabaseController::getInboxUser('', $wpUserId); 
+			$tickets = IBXFWL_Inbox_DatabaseController::getTicketsByUserId($inboxUserId);
 			return $tickets;
 		}
 
@@ -368,29 +368,29 @@ unset($ticket['id']);
 			}
 
 			// Create Users
-			$userId = WC_Inbox_DatabaseController::createOrGetInboxUser($wpUserName, '', $wpUserId);
-			$agentId = WC_Inbox_DatabaseController::createOrGetInboxUser($agentName, $agentEmail, $agentID);
+			$userId = IBXFWL_Inbox_DatabaseController::createOrGetInboxUser($wpUserName, '', $wpUserId);
+			$agentId = IBXFWL_Inbox_DatabaseController::createOrGetInboxUser($agentName, $agentEmail, $agentID);
 
 			// Create Inbox Ticket
-			$ticketId = WC_Inbox_DatabaseController::createInboxTicket($subject, self::STATUS_NEW, $userId, $agentId, $messageType, $readAt, $userReadAt);
+			$ticketId = IBXFWL_Inbox_DatabaseController::createInboxTicket($subject, self::STATUS_NEW, $userId, $agentId, $messageType, $readAt, $userReadAt);
 
 			// Add Ticket Thread
-			WC_Inbox_DatabaseController::addTicketThread($ticketId, $userId, $content, self::STATUS_NEW, $readAt, $userReadAt, $attachments);
+			IBXFWL_Inbox_DatabaseController::addTicketThread($ticketId, $userId, $content, self::STATUS_NEW, $readAt, $userReadAt, $attachments);
 
 			if ( self::TYPE_PRODUCT_RELATED == $messageType ) {
 				// Link to Product
-				WC_Inbox_DatabaseController::createTicketProduct($ticketId, $productId);
+				IBXFWL_Inbox_DatabaseController::createTicketProduct($ticketId, $productId);
 			}
 
 			// check store location
 			if ( self::checkIfExternalHelpdesk() ) {
-				require_once WOOCOMMERCE_SWEITO_INCLUDES_URL . '/api/sweito/TicketService.php';
-				WC_Inbox_Sweito_TicketService::sendNewTicketToHelpdesk($ticketId);
+				require_once IBXFWL_SWEITO_INCLUDES_URL . '/api/sweito/TicketService.php';
+				IBXFWL_Inbox_Sweito_TicketService::sendNewTicketToHelpdesk($ticketId);
 				return;
 			}
 
 			// Notify admin
-			WC_Inbox_MailController::sendAdminInboxNoticeEmail($wpUserName, $agentEmail, $productId, $messageType);
+			IBXFWL_Inbox_MailController::sendAdminInboxNoticeEmail($wpUserName, $agentEmail, $productId, $messageType);
 		}
 
 		/**
@@ -430,27 +430,27 @@ unset($ticket['id']);
 			}
 
 			// Create Users
-			$userId = WC_Inbox_DatabaseController::createOrGetInboxUser($wpUserName, '', $wpUserId);
-			$agentId = WC_Inbox_DatabaseController::createOrGetInboxUser($agentName, $agentEmail, $agentID);
+			$userId = IBXFWL_Inbox_DatabaseController::createOrGetInboxUser($wpUserName, '', $wpUserId);
+			$agentId = IBXFWL_Inbox_DatabaseController::createOrGetInboxUser($agentName, $agentEmail, $agentID);
 
 			// Create Inbox Ticket
-			$ticketId = WC_Inbox_DatabaseController::createInboxTicket($subject, self::STATUS_NEW, $userId, $agentId, self::TYPE_INQUIRY, $readAt, $userReadAt);
+			$ticketId = IBXFWL_Inbox_DatabaseController::createInboxTicket($subject, self::STATUS_NEW, $userId, $agentId, self::TYPE_INQUIRY, $readAt, $userReadAt);
 
 			// Link to Product
-			WC_Inbox_DatabaseController::createTicketProduct($ticketId, $productId);
+			IBXFWL_Inbox_DatabaseController::createTicketProduct($ticketId, $productId);
 
 			// Add Ticket Thread
-			WC_Inbox_DatabaseController::addTicketThread($ticketId, $userId, $content, self::STATUS_NEW, $readAt, $userReadAt, $attachments);
+			IBXFWL_Inbox_DatabaseController::addTicketThread($ticketId, $userId, $content, self::STATUS_NEW, $readAt, $userReadAt, $attachments);
 
 			// check store location
 			if ( self::checkIfExternalHelpdesk() ) {
-				require_once WOOCOMMERCE_SWEITO_INCLUDES_URL . '/api/sweito/TicketService.php';
-				WC_Inbox_Sweito_TicketService::sendNewTicketToHelpdesk($ticketId);
+				require_once IBXFWL_SWEITO_INCLUDES_URL . '/api/sweito/TicketService.php';
+				IBXFWL_Inbox_Sweito_TicketService::sendNewTicketToHelpdesk($ticketId);
 				return;
 			}
 
 			// Notify admin
-			WC_Inbox_MailController::sendAdminInquiryEmail($wpUserName, $agentEmail, $productId);
+			IBXFWL_Inbox_MailController::sendAdminInquiryEmail($wpUserName, $agentEmail, $productId);
 		}
 		
 		/**
@@ -490,36 +490,36 @@ unset($ticket['id']);
 			}
 
 			// Create Users
-			$userId = WC_Inbox_DatabaseController::createOrGetInboxUser($name, $email);
-			$agentId = WC_Inbox_DatabaseController::createOrGetInboxUser($agentName, $agentEmail, $agentID);
+			$userId = IBXFWL_Inbox_DatabaseController::createOrGetInboxUser($name, $email);
+			$agentId = IBXFWL_Inbox_DatabaseController::createOrGetInboxUser($agentName, $agentEmail, $agentID);
 
 			// Create Inbox Ticket
-			$ticketId = WC_Inbox_DatabaseController::createInboxTicket($subject, self::STATUS_NEW, $userId, $agentId, self::TYPE_INQUIRY, $readAt, $userReadAt);
+			$ticketId = IBXFWL_Inbox_DatabaseController::createInboxTicket($subject, self::STATUS_NEW, $userId, $agentId, self::TYPE_INQUIRY, $readAt, $userReadAt);
 
 			// Link to Product
-			WC_Inbox_DatabaseController::createTicketProduct($ticketId, $productId);
+			IBXFWL_Inbox_DatabaseController::createTicketProduct($ticketId, $productId);
 
 			// Add Ticket Thread
-			WC_Inbox_DatabaseController::addTicketThread($ticketId, $userId, $content, self::STATUS_NEW, $readAt, $userReadAt, $attachments);
+			IBXFWL_Inbox_DatabaseController::addTicketThread($ticketId, $userId, $content, self::STATUS_NEW, $readAt, $userReadAt, $attachments);
 
 			// check store location
 			if ( self::checkIfExternalHelpdesk() ) {
-				require_once WOOCOMMERCE_SWEITO_INCLUDES_URL . '/api/sweito/TicketService.php';
-				WC_Inbox_Sweito_TicketService::sendNewTicketToHelpdesk($ticketId);
+				require_once IBXFWL_SWEITO_INCLUDES_URL . '/api/sweito/TicketService.php';
+				IBXFWL_Inbox_Sweito_TicketService::sendNewTicketToHelpdesk($ticketId);
 				return;
 			}
 
 			// Notify admin
-			WC_Inbox_MailController::sendAdminInquiryEmail($name, $agentEmail, $productId);
+			IBXFWL_Inbox_MailController::sendAdminInquiryEmail($name, $agentEmail, $productId);
 		}
 
 		private static function checkIfExternalHelpdesk() {
 			$isAllowed = false;
-			$defaultTicketLocation = WC_Inbox_SettingController::defaultTicketLocation();
+			$defaultTicketLocation = IBXFWL_Inbox_SettingController::defaultTicketLocation();
 
 			if ( 'wpadmin' != $defaultTicketLocation ) {
-				$savedReference = get_option(WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_REFERENCE);
-				$savedHelpdeskStatus = get_option(WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_HELPDESK_STATUS);
+				$savedReference = get_option(IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_REFERENCE);
+				$savedHelpdeskStatus = get_option(IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_HELPDESK_STATUS);
 
 				if ( 'zendesk' == $defaultTicketLocation ) {
 					if ($savedReference && 'zendesk-active' == $savedHelpdeskStatus) {

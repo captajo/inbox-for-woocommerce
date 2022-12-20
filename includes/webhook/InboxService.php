@@ -43,8 +43,8 @@ if ( ! class_exists( 'WC_Inbox_Sweito_InboxService' ) ) {
 		 * @return void
 		 */
 		public static function postTicketEntry() {
-			require_once(WOOCOMMERCE_SWEITO_INCLUDES_URL . '/TicketController.php');
-			require_once(WOOCOMMERCE_SWEITO_INCLUDES_URL . '/DatabaseController.php');
+			require_once(IBXFWL_SWEITO_INCLUDES_URL . '/TicketController.php');
+			require_once(IBXFWL_SWEITO_INCLUDES_URL . '/DatabaseController.php');
 
 			$data = json_decode(file_get_contents('php://input'), true);
 			$description = $data['body'];
@@ -65,16 +65,16 @@ if ( ! class_exists( 'WC_Inbox_Sweito_InboxService' ) ) {
 				];
 			}
 
-			WC_Inbox_TicketController::adminReplyTicketThread($user->user_email, $user->ID, $ticketReference, $description, $cleanAttachments);
+			IBXFWL_Inbox_TicketController::adminReplyTicketThread($user->user_email, $user->ID, $ticketReference, $description, $cleanAttachments);
 
 			// Create Users
-			$ticketId = WC_Inbox_DatabaseController::getTicketIdByReferenceForAdmin($ticketReference);
+			$ticketId = IBXFWL_Inbox_DatabaseController::getTicketIdByReferenceForAdmin($ticketReference);
 
 			if ( ! $ticketId ) {
 return;
 			}
 
-			$ticket = WC_Inbox_DatabaseController::getOnlyTicketDetailsByIdForAdmin($ticketId);
+			$ticket = IBXFWL_Inbox_DatabaseController::getOnlyTicketDetailsByIdForAdmin($ticketId);
 
 			$latestThreadId = 0;
 			foreach ($ticket['threads'] as $thread) {
@@ -96,19 +96,19 @@ return;
 			$reference = $data['reference'];
 			$status = $data['status'];
 
-			$savedReference = get_option(WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_REFERENCE);
+			$savedReference = get_option(IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_REFERENCE);
 			if ($savedReference) {
-				update_option( WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_REFERENCE , $reference);
+				update_option( IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_REFERENCE , $reference);
 			} else {
-				add_option( WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_REFERENCE , $reference);
+				add_option( IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_REFERENCE , $reference);
 			}
 
 
-			$savedStatus = get_option(WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_HELPDESK_STATUS);
+			$savedStatus = get_option(IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_HELPDESK_STATUS);
 			if ($savedStatus) {
-				update_option( WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_HELPDESK_STATUS , $status);
+				update_option( IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_HELPDESK_STATUS , $status);
 			} else {
-				add_option( WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_HELPDESK_STATUS , $status);
+				add_option( IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_HELPDESK_STATUS , $status);
 			}
 
 			wp_send_json_success('success');
@@ -124,12 +124,12 @@ return;
 		public static function validateConnection() {
 			$data = json_decode(file_get_contents('php://input'), true);
 			$reference = $data['reference'];
-			$savedReference = get_option(WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_REFERENCE);
+			$savedReference = get_option(IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_REFERENCE);
 
 			if ($savedReference) {
-				update_option( WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_REFERENCE , $reference);
+				update_option( IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_REFERENCE , $reference);
 			} else {
-				add_option( WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_REFERENCE , $reference);
+				add_option( IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_REFERENCE , $reference);
 			}
 
 			wp_send_json_success('success');
@@ -157,9 +157,9 @@ return;
 		 * @return void
 		 */
 		public static function checkAccessToken( $token) {
-			require_once(WOOCOMMERCE_SWEITO_INCLUDES_URL . '/SettingController.php');
+			require_once(IBXFWL_SWEITO_INCLUDES_URL . '/SettingController.php');
 
-			$savedAccessToken = get_option(WC_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_ACCESS_TOKEN);
+			$savedAccessToken = get_option(IBXFWL_Inbox_SettingController::SETTING_THIRDPARTY_SWEITO_ACCESS_TOKEN);
 
 			if ( ! $savedAccessToken ) {
 return false;

@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Inbox for WooCommerce
- * Plugin URI: http://woocommerce.com/products/inbox-for-woocommerce/
+ * Plugin URI: https://app.sweito.com/#/store/product/9af7ef7d-2455-4c48-929b-603835e6c7b2
  * Description: [Light version] Allow customers send messages and inqiries about product/orders and also provides the shop owner with a helpdesk system for managing message correspondents. It also provides the option to use other helpdesks like Zendesk, Freshdesk, etc.
  * Version: 1.0.4
  * Author: Sweito
@@ -29,20 +29,19 @@ if ( ! class_exists( 'WooCommerce' ) ) {
 	$byPass = true;
 }
 
-// https://app.sweito.com/#/store/product/9af7ef7d-2455-4c48-929b-603835e6c7b2
 
 require_once plugin_dir_path( __FILE__ ) . 'inbox-controller-lte.php';
 
-if ( class_exists( 'InboxForWooCommerceLte' ) ) {
+if ( class_exists( 'IBXFWL_InboxForWooCommerceLte' ) ) {
 
-	define( 'WOOCOMMERCE_HELPDESK_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
-	define( 'WOOCOMMERCE_HELPDESK_ASSETS_URL', plugins_url( '/assets', __FILE__ ) );
-	define( 'WOOCOMMERCE_SWEITO_ASSETS_URL', WP_PLUGIN_DIR . '/inbox-for-woocommerce/assets') ;
-	define( 'WOOCOMMERCE_SWEITO_TEMPLATES_URL', WP_PLUGIN_DIR . '/inbox-for-woocommerce/templates') ;
-	define( 'WOOCOMMERCE_SWEITO_INCLUDES_URL', WP_PLUGIN_DIR . '/inbox-for-woocommerce/includes') ;
-	define( 'WOOCOMMERCE_SWEITO_PRODUCT_URL', 'https://app.sweito.com/#/store/product/9af7ef7d-2455-4c48-929b-603835e6c7b2') ;
+	define( 'IBXFWL_HELPDESK_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
+	define( 'IBXFWL_HELPDESK_ASSETS_URL', plugins_url( '/assets', __FILE__ ) );
+	define( 'IBXFWL_SWEITO_ASSETS_URL', plugin_dir_path( __FILE__ ) . 'assets') ;
+	define( 'IBXFWL_SWEITO_TEMPLATES_URL', plugin_dir_path( __FILE__ ) . 'templates') ;
+	define( 'IBXFWL_SWEITO_INCLUDES_URL', plugin_dir_path( __FILE__ ) . 'includes') ;
+	define( 'IBXFWL_SWEITO_PRODUCT_URL', 'https://app.sweito.com/#/store/product/9af7ef7d-2455-4c48-929b-603835e6c7b2') ;
 
-	$inboxForWooCommerceLte = new InboxForWooCommerceLte();
+	$inboxForWooCommerceLte = new IBXFWL_InboxForWooCommerceLte();
 	$inboxForWooCommerceLte->register();
 
 	// activation
@@ -50,5 +49,5 @@ if ( class_exists( 'InboxForWooCommerceLte' ) ) {
 
 	// deactivation
 	require_once plugin_dir_path( __FILE__ ) . 'includes/DeactivateController.php';
-	register_deactivation_hook( __FILE__, array( 'WC_Inbox_DeactivateController', 'deactivate' ) );
+	register_deactivation_hook( __FILE__, array( 'IBXFWL_Inbox_DeactivateController', 'deactivate' ) );
 }

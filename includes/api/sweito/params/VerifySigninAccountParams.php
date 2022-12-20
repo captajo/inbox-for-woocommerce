@@ -9,9 +9,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-if ( ! class_exists( 'WC_Inbox_Sweito_VerifySigninAccountParams' ) ) {
+if ( ! class_exists( 'IBXFWL_Inbox_Sweito_VerifySigninAccountParams' ) ) {
 
-	class WC_Inbox_Sweito_VerifySigninAccountParams {
+	class IBXFWL_Inbox_Sweito_VerifySigninAccountParams {
 
 		/** Var string */
 		public $emailAddress;
@@ -23,7 +23,7 @@ if ( ! class_exists( 'WC_Inbox_Sweito_VerifySigninAccountParams' ) ) {
 		 * Set Email Address
 		 *
 		 * @param string $emailAddress
-		 * @return WC_Inbox_Sweito_VerifySigninAccountParams
+		 * @return IBXFWL_Inbox_Sweito_VerifySigninAccountParams
 		 */
 		public function setEmailAddress( $emailAddress) {
 			$this->emailAddress = $emailAddress;
@@ -34,7 +34,7 @@ if ( ! class_exists( 'WC_Inbox_Sweito_VerifySigninAccountParams' ) ) {
 		 * Set OTP
 		 *
 		 * @param string $otp
-		 * @return WC_Inbox_Sweito_VerifySigninAccountParams
+		 * @return IBXFWL_Inbox_Sweito_VerifySigninAccountParams
 		 */
 		public function setOtp( $otp) {
 			$this->otp = $otp;

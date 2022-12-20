@@ -9,22 +9,22 @@ if (!defined('ABSPATH')) {
 	exit; // Exit if accessed directly
 }
 
-if (!class_exists('WC_Inbox_ProductAddOn')) {
-	class WC_Inbox_ProductAddOn {
+if (!class_exists('IBXFWL_Inbox_ProductAddOn')) {
+	class IBXFWL_Inbox_ProductAddOn {
 	
 		public static function showCTAButtonBeneathProductPage( $product) {
-			require_once WOOCOMMERCE_SWEITO_INCLUDES_URL . '/SettingController.php';
+			require_once IBXFWL_SWEITO_INCLUDES_URL . '/SettingController.php';
 
-			$defaultCTAText = WC_Inbox_SettingController::defaultInquiryCTAText();
-			$defaultCTATextColor = WC_Inbox_SettingController::defaultInquiryCTATextColor();
-			$defaultCTAButtonText = WC_Inbox_SettingController::defaultInquiryCTAButtonText();
-			$defaultCTAButtonColor = WC_Inbox_SettingController::defaultInquiryCTAButtonColor();
-			$defaultCTABackgroundColor = WC_Inbox_SettingController::defaultInquiryCTABackgroundColor();
-			$defaultCTABackgroundType = WC_Inbox_SettingController::defaultInquiryCTABackgroundType();
+			$defaultCTAText = IBXFWL_Inbox_SettingController::defaultInquiryCTAText();
+			$defaultCTATextColor = IBXFWL_Inbox_SettingController::defaultInquiryCTATextColor();
+			$defaultCTAButtonText = IBXFWL_Inbox_SettingController::defaultInquiryCTAButtonText();
+			$defaultCTAButtonColor = IBXFWL_Inbox_SettingController::defaultInquiryCTAButtonColor();
+			$defaultCTABackgroundColor = IBXFWL_Inbox_SettingController::defaultInquiryCTABackgroundColor();
+			$defaultCTABackgroundType = IBXFWL_Inbox_SettingController::defaultInquiryCTABackgroundType();
 			$defaultCTABackgroundLink = '';
 
 			if ('background-image' == $defaultCTABackgroundType) {
-				$defaultCTABackgroundLink = WC_Inbox_SettingController::defaultInquiryCTABackgroundLink();
+				$defaultCTABackgroundLink = IBXFWL_Inbox_SettingController::defaultInquiryCTABackgroundLink();
 				$defaultCTABackgroundColor = 'rgba(0,0,0,0.4)';
 			}
 

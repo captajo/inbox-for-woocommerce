@@ -9,18 +9,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-if ( ! class_exists( 'WC_Inbox_Sweito_AccountService' ) ) {
-	class WC_Inbox_Sweito_AccountService {
+if ( ! class_exists( 'IBXFWL_Inbox_Sweito_AccountService' ) ) {
+	class IBXFWL_Inbox_Sweito_AccountService {
 		const SWEITO_API = 'https://api.sweito.com';
 
 		/**
 		 * Register Account
 		 *
 		 * @param class $params
-		 * @return WC_Inbox_Sweito_CreateAccountResponse
+		 * @return IBXFWL_Inbox_Sweito_CreateAccountResponse
 		 */
 		public static function registerAccount( $params) {
-			require_once(WOOCOMMERCE_SWEITO_INCLUDES_URL . '/api/sweito/responses/CreateAccountResponse.php');
+			require_once(IBXFWL_SWEITO_INCLUDES_URL . '/api/sweito/responses/CreateAccountResponse.php');
 
 			// set post fields
 			$post = [
@@ -53,7 +53,7 @@ if ( ! class_exists( 'WC_Inbox_Sweito_AccountService' ) ) {
 				return;
 			};
 
-			return ( new WC_Inbox_Sweito_CreateAccountResponse() )->setToken($response['data']);
+			return ( new IBXFWL_Inbox_Sweito_CreateAccountResponse() )->setToken($response['data']);
 		}
 
 		/**
@@ -87,10 +87,10 @@ return false;
 		 * Continue with existing account
 		 *
 		 * @param class $params
-		 * @return WC_Inbox_Sweito_CreateAccountResponse
+		 * @return IBXFWL_Inbox_Sweito_CreateAccountResponse
 		 */
 		public static function verifyAccountOTP( $params, $site) {
-			require_once(WOOCOMMERCE_SWEITO_INCLUDES_URL . '/api/sweito/responses/CreateAccountResponse.php');
+			require_once(IBXFWL_SWEITO_INCLUDES_URL . '/api/sweito/responses/CreateAccountResponse.php');
 			
 			// set post fields
 			$post = [
@@ -121,7 +121,7 @@ return false;
 				return;
 			};
 
-			return ( new WC_Inbox_Sweito_CreateAccountResponse() )->setToken($response['data']);
+			return ( new IBXFWL_Inbox_Sweito_CreateAccountResponse() )->setToken($response['data']);
 		}
 
 		/**
@@ -216,10 +216,10 @@ return false;
 		 * @return string
 		 */
 		public static function checkExtensionVersion() {
-			require_once(WOOCOMMERCE_SWEITO_INCLUDES_URL . '/SettingController.php');
+			require_once(IBXFWL_SWEITO_INCLUDES_URL . '/SettingController.php');
 
-			$lastCheck = get_option(WC_Inbox_SettingController::SETTING_UPDATE_LAST_CHECKED);
-			$lastState = get_option(WC_Inbox_SettingController::SETTING_UPDATE_STATE);
+			$lastCheck = get_option(IBXFWL_Inbox_SettingController::SETTING_UPDATE_LAST_CHECKED);
+			$lastState = get_option(IBXFWL_Inbox_SettingController::SETTING_UPDATE_STATE);
 
 			$shouldCheck = true;
 			if ( $lastCheck ) {
@@ -252,11 +252,11 @@ return false;
 				}
 
 				if ($lastState) {
-					update_option(WC_Inbox_SettingController::SETTING_UPDATE_STATE, $state);
-					update_option(WC_Inbox_SettingController::SETTING_UPDATE_LAST_CHECKED, gmdate('Y-m-d H:i:s'));
+					update_option(IBXFWL_Inbox_SettingController::SETTING_UPDATE_STATE, $state);
+					update_option(IBXFWL_Inbox_SettingController::SETTING_UPDATE_LAST_CHECKED, gmdate('Y-m-d H:i:s'));
 				} else {
-					add_option(WC_Inbox_SettingController::SETTING_UPDATE_STATE, $state);
-					update_option(WC_Inbox_SettingController::SETTING_UPDATE_LAST_CHECKED, gmdate('Y-m-d H:i:s'));
+					add_option(IBXFWL_Inbox_SettingController::SETTING_UPDATE_STATE, $state);
+					update_option(IBXFWL_Inbox_SettingController::SETTING_UPDATE_LAST_CHECKED, gmdate('Y-m-d H:i:s'));
 				}
 			}
 
@@ -295,28 +295,49 @@ return false;
 		 * @return array
 		 */
 		public static function sendRequest( $path, $params, $token = '', $email = '') {
-			$ch = curl_init($path);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-			curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+			// $ch = curl_init($path);
+			// curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			// curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
 
+			// if ( $token && $email ) {
+			// 	curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+			// 		'X-AUTH-ACCESS: ' . $token,
+			// 		'Accept: application/json'
+			// 	));
+			// }
+
+			// try {
+			// 	// execute!
+			// 	$response = curl_exec($ch);
+			// } catch (\Exception $ex) {
+			// 	return 'ok';
+			// }
+
+			// // close the connection, release resources used
+			// curl_close($ch);
+
+			$headers = array();
 			if ( $token && $email ) {
-				curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-					'X-AUTH-ACCESS: ' . $token,
-					'Accept: application/json'
-				));
+				$headers = array(
+					'X-AUTH-ACCESS' => $token,
+					'Accept' => 'application/json'
+				);
 			}
 
-			try {
-				// execute!
-				$response = curl_exec($ch);
-			} catch (\Exception $ex) {
-				return 'ok';
-			}
+			$args = array(
+				'body'        => $params,
+				'timeout'     => '5',
+				'redirection' => '5',
+				'httpversion' => '1.0',
+				'blocking'    => true,
+				'headers'     => $headers,
+				'cookies'     => array(),
+			);
 
-			// close the connection, release resources used
-			curl_close($ch);
+			$response = wp_remote_post( $path, $args );
+			$body = wp_remote_retrieve_body( $response );
 
-			$data = json_decode($response, true);
+			$data = json_decode($body, true);
 
 			return $data;
 		}

@@ -9,8 +9,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-if ( ! class_exists( 'WC_Inbox_MailController' ) ) {
-	class WC_Inbox_MailController {
+if ( ! class_exists( 'IBXFWL_Inbox_MailController' ) ) {
+	class IBXFWL_Inbox_MailController {
 		const STATUS_NEW = 'new';
 		const STATUS_OPEN = 'open';
 		const STATUS_CLOSED = 'open';
@@ -27,9 +27,9 @@ if ( ! class_exists( 'WC_Inbox_MailController' ) ) {
 			$email,
 			$name
 		) {
-			require_once(WOOCOMMERCE_SWEITO_TEMPLATES_URL . '/mail/NewTicketAssigned.php');
+			require_once(IBXFWL_SWEITO_TEMPLATES_URL . '/mail/NewTicketAssigned.php');
 
-			$mailTemplate = WC_Inbox_Mail_NewTicketAssigned::agentNewTicketTemplate();
+			$mailTemplate = IBXFWL_Inbox_Mail_NewTicketAssigned::agentNewTicketTemplate();
 			$mailTemplate = str_replace('[agentName]', $name, $mailTemplate);
 
 			$heading = esc_html__('New Ticket Assigned', 'inbox-for-woocommerce');
@@ -49,14 +49,14 @@ if ( ! class_exists( 'WC_Inbox_MailController' ) ) {
 			$email,
 			$reply
 		) {
-			require_once(WOOCOMMERCE_SWEITO_TEMPLATES_URL . '/mail/AdminInboxMessageReplied.php');
-			require_once(WOOCOMMERCE_SWEITO_INCLUDES_URL . '/SettingController.php');
+			require_once(IBXFWL_SWEITO_TEMPLATES_URL . '/mail/AdminInboxMessageReplied.php');
+			require_once(IBXFWL_SWEITO_INCLUDES_URL . '/SettingController.php');
 
-			if ( !WC_Inbox_SettingController::defaultNotificationWhenCustomerReplyInbox() ) {
+			if ( !IBXFWL_Inbox_SettingController::defaultNotificationWhenCustomerReplyInbox() ) {
 return;
 			}
 
-			$mailTemplate = WC_Inbox_Mail_AdminInboxMessageReplied::customerMessageReplyTemplate();
+			$mailTemplate = IBXFWL_Inbox_Mail_AdminInboxMessageReplied::customerMessageReplyTemplate();
 			$mailTemplate = str_replace('[customerMessage]', $reply, $mailTemplate);
 
 			$heading = esc_html__('The customer replied', 'inbox-for-woocommerce');
@@ -76,14 +76,14 @@ return;
 			$email,
 			$reply
 		) {
-			require_once(WOOCOMMERCE_SWEITO_TEMPLATES_URL . '/mail/CustomerMessageReply.php');
-			require_once(WOOCOMMERCE_SWEITO_INCLUDES_URL . '/SettingController.php');
+			require_once(IBXFWL_SWEITO_TEMPLATES_URL . '/mail/CustomerMessageReply.php');
+			require_once(IBXFWL_SWEITO_INCLUDES_URL . '/SettingController.php');
 
-			if ( !WC_Inbox_SettingController::defaultNotificationWhenAdminReplyInbox() ) {
+			if ( !IBXFWL_Inbox_SettingController::defaultNotificationWhenAdminReplyInbox() ) {
 return;
 			}
 
-			$mailTemplate = WC_Inbox_Mail_CustomerMessageReply::customerMessageReplyTemplate();
+			$mailTemplate = IBXFWL_Inbox_Mail_CustomerMessageReply::customerMessageReplyTemplate();
 			$mailTemplate = str_replace('[adminMessage]', $reply, $mailTemplate);
 
 			$heading = esc_html__('The seller replied your inbox message', 'inbox-for-woocommerce');
@@ -107,16 +107,16 @@ return;
 			$customerMessage,
 			$reply
 		) {
-			require_once(WOOCOMMERCE_SWEITO_TEMPLATES_URL . '/mail/CustomerInquiryReply.php');
-			require_once(WOOCOMMERCE_SWEITO_INCLUDES_URL . '/SettingController.php');
+			require_once(IBXFWL_SWEITO_TEMPLATES_URL . '/mail/CustomerInquiryReply.php');
+			require_once(IBXFWL_SWEITO_INCLUDES_URL . '/SettingController.php');
 
-			if ( !WC_Inbox_SettingController::defaultNotificationWhenAdminReplyInquiry() ) {
+			if ( !IBXFWL_Inbox_SettingController::defaultNotificationWhenAdminReplyInquiry() ) {
 return;
 			}
 
 			// $productUrl = wp_get_attachment_image_src( $product->get_image_id(), 'thumbnail' );
 
-			$mailTemplate = WC_Inbox_Mail_CustomerInquiryReply::customerInquiryReplyTemplate();
+			$mailTemplate = IBXFWL_Inbox_Mail_CustomerInquiryReply::customerInquiryReplyTemplate();
 			$mailTemplate = str_replace('[productImage]', $product['img'][0], $mailTemplate);
 			$mailTemplate = str_replace('[productTitle]', $product['title'], $mailTemplate);
 			$mailTemplate = str_replace('[productLink]', $product['link'], $mailTemplate);
@@ -146,10 +146,10 @@ return;
 			$productId = null,
 			$messageType = null
 		) {
-			require_once(WOOCOMMERCE_SWEITO_TEMPLATES_URL . '/mail/AdminNewInboxMessage.php');
-			require_once(WOOCOMMERCE_SWEITO_INCLUDES_URL . '/SettingController.php');
+			require_once(IBXFWL_SWEITO_TEMPLATES_URL . '/mail/AdminNewInboxMessage.php');
+			require_once(IBXFWL_SWEITO_INCLUDES_URL . '/SettingController.php');
 
-			if ( !WC_Inbox_SettingController::defaultNotificationWhenInboxReceived() ) {
+			if ( !IBXFWL_Inbox_SettingController::defaultNotificationWhenInboxReceived() ) {
 return;
 			}
 
@@ -157,7 +157,7 @@ return;
 				$product = wc_get_product( $productId );
 				$productUrl = wp_get_attachment_image_src( $product->get_image_id(), 'thumbnail' );
 
-				$mailTemplate = WC_Inbox_Mail_AdminNewInboxMessage::adminInboxNoticeWithProductTemplate();
+				$mailTemplate = IBXFWL_Inbox_Mail_AdminNewInboxMessage::adminInboxNoticeWithProductTemplate();
 				$mailTemplate = str_replace('[senderName]', $name, $mailTemplate);
 				$mailTemplate = str_replace('[productImage]', $productUrl[0], $mailTemplate);
 				$mailTemplate = str_replace('[productTitle]', $product->get_title(), $mailTemplate);
@@ -165,7 +165,7 @@ return;
 				$heading = esc_html__('New Inbox Message', 'inbox-for-woocommerce');
 				$subject = esc_html__('New Inbox Message regarding', 'inbox-for-woocommerce') . ' "' . $product->get_title() . '"';
 			} else {
-				$mailTemplate = WC_Inbox_Mail_AdminNewInboxMessage::adminInboxNoticeTemplate();
+				$mailTemplate = IBXFWL_Inbox_Mail_AdminNewInboxMessage::adminInboxNoticeTemplate();
 				$mailTemplate = str_replace('[senderName]', $name, $mailTemplate);
 				$mailTemplate = str_replace('[messageType]', $messageType, $mailTemplate);
 
@@ -189,17 +189,17 @@ return;
 			$email,
 			$productId
 		) {
-			require_once(WOOCOMMERCE_SWEITO_TEMPLATES_URL . '/mail/AdminNewInquiryMessage.php');
-			require_once(WOOCOMMERCE_SWEITO_INCLUDES_URL . '/SettingController.php');
+			require_once(IBXFWL_SWEITO_TEMPLATES_URL . '/mail/AdminNewInquiryMessage.php');
+			require_once(IBXFWL_SWEITO_INCLUDES_URL . '/SettingController.php');
 
-			if ( !WC_Inbox_SettingController::defaultNotificationWhenInquiryReceived() ) {
+			if ( !IBXFWL_Inbox_SettingController::defaultNotificationWhenInquiryReceived() ) {
 return;
 			}
 
 			$product = wc_get_product( $productId );
 			$productUrl = wp_get_attachment_image_src( $product->get_image_id(), 'thumbnail' );
 
-			$mailTemplate = WC_Inbox_Mail_AdminNewInquiryMessage::adminInquiryTemplate();
+			$mailTemplate = IBXFWL_Inbox_Mail_AdminNewInquiryMessage::adminInquiryTemplate();
 			$mailTemplate = str_replace('[senderName]', $name, $mailTemplate);
 			$mailTemplate = str_replace('[productImage]', $productUrl[0], $mailTemplate);
 			$mailTemplate = str_replace('[productTitle]', $product->get_title(), $mailTemplate);

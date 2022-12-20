@@ -9,8 +9,8 @@
 if (!defined('ABSPATH')) {
 	exit; // Exit if accessed directly
 }
-if (!class_exists('WC_Inbox_Mail_CustomerMessageReply')) {
-	class WC_Inbox_Mail_CustomerMessageReply {
+if (!class_exists('IBXFWL_Inbox_Mail_CustomerMessageReply')) {
+	class IBXFWL_Inbox_Mail_CustomerMessageReply {
 	
 		public static function customerMessageReplyTemplate() {
 			return ' 

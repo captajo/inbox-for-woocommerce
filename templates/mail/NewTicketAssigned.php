@@ -10,8 +10,8 @@ if (!defined('ABSPATH')) {
 	exit; // Exit if accessed directly
 }
 
-if (!class_exists('WC_Inbox_Mail_NewTicketAssigned')) {
-	class WC_Inbox_Mail_NewTicketAssigned {
+if (!class_exists('IBXFWL_Inbox_Mail_NewTicketAssigned')) {
+	class IBXFWL_Inbox_Mail_NewTicketAssigned {
 	
 		public static function agentNewTicketTemplate() {
 			return ' 
